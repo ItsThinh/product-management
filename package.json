@@ -11,8 +11,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "bson": "^7.1.1",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "mongoose": "^9.1.4",
     "pug": "^3.0.3"
   },
   "devDependencies": {
