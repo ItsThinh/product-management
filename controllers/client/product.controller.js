@@ -6,6 +6,7 @@ module.exports.index = async (req, res) => {
         status: "active",
         deleted: false
     });
+    // Hàm find() của Mongoose sẽ thực thi bất đồng bộ, nó trả về 1 mảng, ở đây ta dùng await để đợi nó thực thi xong
 
     const newProducts = products.map(item => {
         const newPrice = Math.floor((item.price - item.discountPercentage / 100 * item.price) * 100) / 100;

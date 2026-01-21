@@ -1,5 +1,5 @@
 module.exports.index = (req, res) => {
     res.render('client/pages/home/index', {
-        pageTitle: "Sản phẩm"
+        pageTitle: "Trang chủ"
     });
 };

@@ -13,5 +13,10 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model("Product", productSchema, 'products');
+// Tham số đầu tiên dùng cho ID nội bộ của mongoose, có thể đặt tùy ý nhưng nên đặt theo convention
+// Ta đăng ký model "Product" vào mongoose.models
+//
+// Biến Product sẽ được sử dụng để thao tác với database tương ứng collection 'products'
+
 
 module.exports = Product;
