@@ -37,15 +37,6 @@ a {
   align-items: center;
 }
 
-/* Cột */
-.header .col-3 {
-  width: 25%;
-}
-
-.header .col-9 {
-  width: 75%;
-}
-
 /* Logo */
 .header .inner-logo img {
   height: 40px;

@@ -1,0 +1,117 @@
+/* ===============================
+   RESET CƠ BẢN
+================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f4f6f8;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.header {
+  height: 64px;
+  background-color: #2b2f36;
+  color: #e0e3e7;
+  display: flex;
+  align-items: center;
+}
+
+.header .inner-logo a {
+  color: #e0e3e7;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.header .inner-logo a:hover {
+  opacity: 0.85;
+}
+
+/* ===============================
+   BODY LAYOUT
+================================ */
+.body {
+  display: flex;
+  min-height: calc(100vh - 64px);
+}
+
+/* ===============================
+   SIDER
+================================ */
+.sider {
+  width: 240px;
+  background-color: #23262d;
+  color: #e0e3e7;
+}
+
+/* ===============================
+   SIDER MENU
+================================ */
+.sider .inner-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sider .inner-menu li {
+  margin: 0;
+}
+
+.sider .inner-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 12px 0;
+
+  border-bottom: 1px solid #3a3f47;
+
+  color: #e0e3e7;
+  text-decoration: none;
+  font-weight: 500;
+
+  transition: background-color 0.15s ease;
+}
+
+.sider .inner-menu li:first-child a {
+  border-top: 1px solid #3a3f47;
+}
+
+.sider .inner-menu a:hover {
+  background-color: #2e323a;
+}
+
+/* ===============================
+   MAIN CONTENT
+================================ */
+.main {
+  flex: 1;
+  padding: 24px;
+  background-color: #f3f4f6;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .sider {
+    width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .sider {
+    width: 100%;
+  }
+}
