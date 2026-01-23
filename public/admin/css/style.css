@@ -115,3 +115,51 @@ body {
     width: 100%;
   }
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+thead th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+tbody td {
+  padding: 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid #dee2e6;
+}
+
+tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Ảnh sản phẩm */
+table img {
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Badge trạng thái */
+.badge {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+}
+
+/* Cột hành động */
+td:last-child {
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Nút hành động */
+.btn {
+  margin: 2px;
+}
