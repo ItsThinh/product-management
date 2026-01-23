@@ -5,8 +5,16 @@ block main
   .card.mb-3
     .card-header Bộ lọc và tìm kiếm
     .card-body
-      each button in filterButtons
-        button(class=`btn btn-sm ms-1 btn-outline-success ${button.class}`, button-status=button.status) #{button.name}
+      .row
+        .col-6
+          each button in filterButtons
+            button(class=`btn btn-sm ms-1 btn-outline-success ${button.class}`, button-status=button.status) #{button.name}
+        .col-6 
+          form(id='searchForm')
+            .input-group 
+              input(type='text', placeholder='Nhập từ khóa', name='keyword', class='form-control')
+              .input-group-append 
+                button(class='btn btn-success', type='submit') Tìm
 
   .card.mb-3
     .card-header Danh sách
