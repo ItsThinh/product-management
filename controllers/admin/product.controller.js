@@ -1,7 +1,5 @@
 const Product = require('../../models/product.model');
 
-
-
 module.exports.index = async (req, res) => {
 
     const filterButtons = [
@@ -36,11 +34,18 @@ module.exports.index = async (req, res) => {
         filterButtons[index].class = 'active';
     }
 
+    let keyword = '';
+    if (req.query.keyword) {
+        keyword = req.query.keyword.trim();
+        find.title = new RegExp(keyword, 'i');
+    }
+
     const products = await Product.find(find);
 
     res.render('admin/pages/products/index', {
         pageTitle: "Quản lý danh sách sản phẩm",
         products: products,
-        filterButtons: filterButtons
+        filterButtons: filterButtons,
+        keyword: keyword
     });
 }
