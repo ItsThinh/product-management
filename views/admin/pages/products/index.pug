@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/filterStatus.pug
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 
 block main 
   h1 DANH SÁCH SẢN PHẨM 
@@ -30,7 +31,8 @@ block main
         tbody
           each product, index in products
             tr 
-              td #{index + 1}
+              //- td #{index + 1}
+              td #{product.position}
               td 
                 img(src=product.thumbnail, alt=product.title, width='100px', height='auto')
               td #{product.title}
@@ -43,3 +45,6 @@ block main
               td 
                 button(class='btn btn-warning btn-sm') Sửa
                 button(class='btn btn-danger btn-sm ms-1') Xóa
+
+  +pagination(paginationObject)
+      
