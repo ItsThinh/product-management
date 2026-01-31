@@ -135,6 +135,7 @@ tbody td {
   padding: 12px;
   vertical-align: middle;
   border-bottom: 1px solid #dee2e6;
+  text-align: center;
 }
 
 tbody tr:hover {

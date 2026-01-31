@@ -39,12 +39,35 @@ block main
               td #{product.price}$
               td 
                 if (product.status == 'active')
-                  a(href='#', class='badge bg-success') Hoạt động
+                  button(
+                    type='button'
+                    data-status=product.status
+                    data-id=product.id
+                    button-change-status
+                    class='badge bg-success'
+                  ) Hoạt động
                 else 
-                  a(href='#', class='badge bg-secondary') Dừng hoạt động
+                  button(
+                    type='button'
+                    data-status=product.status
+                    data-id=product.id
+                    button-change-status
+                    class='badge bg-secondary'
+                  ) Dừng hoạt động
               td 
                 button(class='btn btn-warning btn-sm') Sửa
                 button(class='btn btn-danger btn-sm ms-1') Xóa
 
   +pagination(paginationObject)
-      
+
+  form(
+    action=''
+    method='POST'
+    id='form-change-status'
+    data-path=`${prefixAdmin}/products/change-status`
+  )
+  //- Form chỉ hỗ trợ 2 phương thức là GET và POST, muốn xử dụng
+  //- các phương thức khác thì phải cài thêm thư viện.
+  //- Thư viện sẽ được dùng là method-override
+  
+  script(src='/admin/js/product.js')

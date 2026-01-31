@@ -2,6 +2,7 @@ const express = require('express');
 const route = require('./routes/client/index.route');
 const adminRoute = require('./routes/admin/index.route');
 const database = require('./config/database');
+const methodOverride = require('method-override');
 
 const systemConfig = require('./config/system');
 
@@ -11,6 +12,8 @@ const app = express();
 const port = process.env.PORT;
 
 database.connect();
+
+app.use(methodOverride('_method'));
 
 app.use(express.static('public'));
 

@@ -5,4 +5,7 @@ const controller = require('../../controllers/admin/product.controller');
 
 router.get('/', controller.index);
 
+router.patch('/change-status/:status/:id', controller.changeStatus);
+// :status và :id là route params, Express sẽ map vào req.params trong controller
+
 module.exports = router;
