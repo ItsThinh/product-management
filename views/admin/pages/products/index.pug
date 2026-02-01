@@ -69,7 +69,11 @@ block main
                     ) Dừng hoạt động
                 td 
                   button(class='btn btn-warning btn-sm') Sửa
-                  button(class='btn btn-danger btn-sm ms-1') Xóa
+                  button(
+                    class='btn btn-danger btn-sm ms-1'
+                    button-delete
+                    data-id=product.id
+                    ) Xóa
 
   +pagination(paginationObject)
 
@@ -82,5 +86,12 @@ block main
   //- Form chỉ hỗ trợ 2 phương thức là GET và POST, muốn xử dụng
   //- các phương thức khác thì phải cài thêm thư viện.
   //- Thư viện sẽ được dùng là method-override
+
+  form(
+    action=''
+    method='POST'
+    id='form-delete-item'
+    data-path=`${prefixAdmin}/products/delete`
+  )
   
   script(src='/admin/js/product.js')
