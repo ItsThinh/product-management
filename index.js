@@ -3,6 +3,7 @@ const route = require('./routes/client/index.route');
 const adminRoute = require('./routes/admin/index.route');
 const database = require('./config/database');
 const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
 
 const systemConfig = require('./config/system');
 
@@ -14,6 +15,8 @@ const port = process.env.PORT;
 database.connect();
 
 app.use(methodOverride('_method'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static('public'));
 

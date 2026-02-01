@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/filterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/formChangeMulti.pug
 
 block main 
   h1 DANH SÁCH SẢN PHẨM 
@@ -17,46 +18,58 @@ block main
 
   .card.mb-3
     .card-header Danh sách
-    .card-body
-      table
-        thead 
-          tr
-            th STT
-            th Hình ảnh
-            th Tiêu đề
-            th Giá
-            th Trạng thái
-            th Hành động
+      .card-body
+        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
 
-        tbody
-          each product, index in products
-            tr 
-              //- td #{index + 1}
-              td #{product.position}
-              td 
-                img(src=product.thumbnail, alt=product.title, width='100px', height='auto')
-              td #{product.title}
-              td #{product.price}$
-              td 
-                if (product.status == 'active')
-                  button(
-                    type='button'
-                    data-status=product.status
-                    data-id=product.id
-                    button-change-status
-                    class='badge bg-success'
-                  ) Hoạt động
-                else 
-                  button(
-                    type='button'
-                    data-status=product.status
-                    data-id=product.id
-                    button-change-status
-                    class='badge bg-secondary'
-                  ) Dừng hoạt động
-              td 
-                button(class='btn btn-warning btn-sm') Sửa
-                button(class='btn btn-danger btn-sm ms-1') Xóa
+        table(
+          class='.table.table-hover.table-sm'
+          checkbox-multi
+        )
+          thead 
+            tr
+              th
+                input(type='checkbox' name='checkall')
+              th STT
+              th Hình ảnh
+              th Tiêu đề
+              th Giá
+              th Trạng thái
+              th Hành động
+
+          tbody
+            each product, index in products
+              tr 
+                td
+                  input(
+                    type='checkbox'
+                    name='id'
+                    value=product.id
+                  )
+                td #{index + 1}
+                td 
+                  img(src=product.thumbnail, alt=product.title, width='100px', height='auto')
+                td #{product.title}
+                td #{product.price}$
+                td 
+                  if (product.status == 'active')
+                    button(
+                      type='button'
+                      data-status=product.status
+                      data-id=product.id
+                      button-change-status
+                      class='badge bg-success'
+                    ) Hoạt động
+                  else 
+                    button(
+                      type='button'
+                      data-status=product.status
+                      data-id=product.id
+                      button-change-status
+                      class='badge bg-secondary'
+                    ) Dừng hoạt động
+                td 
+                  button(class='btn btn-warning btn-sm') Sửa
+                  button(class='btn btn-danger btn-sm ms-1') Xóa
 
   +pagination(paginationObject)
 
