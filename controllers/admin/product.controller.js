@@ -78,6 +78,7 @@ module.exports.changeMulti = async (req, res) => {
 // [DELETE] /admin/products/delete-item/:id
 module.exports.deleteItem = async (req, res) => {
     const productId = req.params.id;
-    await Product.deleteOne({ _id: productId });
+    // await Product.deleteOne({ _id: productId }); // hard delete
+    await Product.updateOne({ _id: productId }, { deleted: true, deletedAt: new Date() }); // soft delete
     res.redirect(req.get('Referrer') || '/');
 }
