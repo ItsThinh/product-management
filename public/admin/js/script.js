@@ -92,6 +92,13 @@ if (formChangeMulti) {
     formChangeMulti.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        const typeChange = e.target.elements.type.value;
+        console.log(typeChange);
+        if (typeChange == 'delete-all') {
+            const isConfirm = confirm('Xác nhận xóa bỏ những sản phẩm đã chọn?');
+            if (!isConfirm) return;
+        }
+
         const checkboxMulti = document.querySelector('[checkbox-multi]');
         const checkboxChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
 
