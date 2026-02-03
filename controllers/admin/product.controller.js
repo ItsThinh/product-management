@@ -59,6 +59,7 @@ module.exports.changeStatus = async (req, res) => {
     const id = req.params.id;
     const statusChange = req.params.status;
     await Product.updateOne({ _id: id}, { status: statusChange });
+    
     res.redirect(req.get('Referrer') || '/');
     // res.redirect('back') đã bị loại bỏ ở Express 5
 }
@@ -71,21 +72,25 @@ module.exports.changeMulti = async (req, res) => {
     switch (type) {
         case 'active':
             await Product.updateMany({ _id: { $in: ids }}, { status: 'active'});
+            req.flash('success', `Cập nhật trạng thái ${ids.length} sản phẩm thành công`);
             break;
         case 'inactive':
             await Product.updateMany({ _id: { $in: ids }}, { status: 'inactive'});
+            req.flash('success', `Cập nhật trạng thái ${ids.length} sản phẩm thành công`);
             break;
         case 'delete-all':
             await Product.updateMany(
                 { _id: { $in: ids }},
                 { deleted: true, deletedAt: new Date()}
             );
+            req.flash('success', `Xóa ${ids.length} sản phẩm thành công`);
             break;
         case 'change-position':
             for (const item of ids) {
                 const [id, position] = item.split('-');
                 await Product.updateOne({ _id: id }, { position: parseInt(position) });
             }
+            req.flash('success', `Cập nhật vị trí ${ids.length} sản phẩm thành công`);
             break;
     }
     res.redirect(req.get('Referrer') || '/');
@@ -99,5 +104,6 @@ module.exports.deleteItem = async (req, res) => {
         { _id: productId },
          { deleted: true, deletedAt: new Date() }
         ); // soft delete
+    req.flash('success', `Xóa sản phẩm thành công`);
     res.redirect(req.get('Referrer') || '/');
 }

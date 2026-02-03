@@ -164,3 +164,42 @@ td:last-child {
 .btn {
   margin: 2px;
 }
+
+/* Container chính cho thông báo */
+.alert-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 300px;
+    padding-right: 40px; /* Chừa chỗ cho nút x */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Nút đóng (span close-alert) */
+[close-alert] {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+[close-alert]:hover {
+    opacity: 1;
+}
+
+/* Class để ẩn thông báo với hiệu ứng mờ dần */
+.alert-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-20px); /* Hiệu ứng bay lên nhẹ khi ẩn */
+}

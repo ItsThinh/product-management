@@ -4,6 +4,9 @@ const adminRoute = require('./routes/admin/index.route');
 const database = require('./config/database');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
+const flash = require('express-flash');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const systemConfig = require('./config/system');
 
@@ -16,6 +19,13 @@ database.connect();
 
 app.use(methodOverride('_method'));
 
+// Flash
+app.use(cookieParser('keyboard cat'));  // Lưu vào cookie
+app.use(session({ cookie: { maxAge: 60000 } })); // Thời gian tồn tại 60s
+app.use(flash());
+// End Flash
+
+// Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static('public'));
@@ -23,9 +33,11 @@ app.use(express.static('public'));
 app.set('views', './views');
 app.set('view engine', 'pug');
 
+// Route
 route(app);
 adminRoute(app);
 
+// App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // Biến prefixAdmin bây giờ sẽ có thể được gọi ở bất cứ file pug nào
 
