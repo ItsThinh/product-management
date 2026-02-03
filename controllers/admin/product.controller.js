@@ -38,7 +38,11 @@ module.exports.index = async (req, res) => {
 
     // End Pagination
 
-    const products = await Product.find(find).limit(paginationObject.limit).skip(paginationObject.skip);
+    const products = await Product
+    .find(find)
+    .limit(paginationObject.limit)
+    .skip(paginationObject.skip)
+    .sort({ position: 'desc' });
 
     res.render('admin/pages/products/index', {
         pageTitle: "Quản lý danh sách sản phẩm",
@@ -72,11 +76,17 @@ module.exports.changeMulti = async (req, res) => {
             await Product.updateMany({ _id: { $in: ids }}, { status: 'inactive'});
             break;
         case 'delete-all':
-        await Product.updateMany(
-            { _id: { $in: ids }},
-            { deleted: true, deletedAt: new Date()}
-        );
-        break;
+            await Product.updateMany(
+                { _id: { $in: ids }},
+                { deleted: true, deletedAt: new Date()}
+            );
+            break;
+        case 'change-position':
+            for (const item of ids) {
+                const [id, position] = item.split('-');
+                await Product.updateOne({ _id: id }, { position: parseInt(position) });
+            }
+            break;
     }
     res.redirect(req.get('Referrer') || '/');
 }

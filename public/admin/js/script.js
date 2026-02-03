@@ -93,7 +93,6 @@ if (formChangeMulti) {
         e.preventDefault();
 
         const typeChange = e.target.elements.type.value;
-        console.log(typeChange);
         if (typeChange == 'delete-all') {
             const isConfirm = confirm('Xác nhận xóa bỏ những sản phẩm đã chọn?');
             if (!isConfirm) return;
@@ -105,7 +104,15 @@ if (formChangeMulti) {
         if (checkboxChecked.length > 0) {
             let ids = [];
             checkboxChecked.forEach(input => {
-                ids.push(input.value);
+                const id = input.value;
+                if (typeChange == 'change-position') {
+                    const position = input.closest('tr').querySelector("input[name='position']").value;
+                    console.log(position);
+                    ids.push(`${id}-${position}`);
+                } else {
+                    ids.push(id);
+                }
+                
             })
             console.log(ids);
 

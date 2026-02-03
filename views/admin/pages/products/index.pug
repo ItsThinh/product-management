@@ -33,6 +33,7 @@ block main
               th Hình ảnh
               th Tiêu đề
               th Giá
+              th Vị trí
               th Trạng thái
               th Hành động
 
@@ -50,6 +51,14 @@ block main
                   img(src=product.thumbnail, alt=product.title, width='100px', height='auto')
                 td #{product.title}
                 td #{product.price}$
+                td 
+                  input(
+                    type='number'
+                    value=product.position 
+                    style='width: 60px'
+                    min='1'
+                    name='position'
+                  )
                 td 
                   if (product.status == 'active')
                     button(
