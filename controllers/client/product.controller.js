@@ -19,4 +19,4 @@ module.exports.index = async (req, res) => {
         pageTitle: "Trang sản phẩm",
         products: newProducts
     });
-}
+};

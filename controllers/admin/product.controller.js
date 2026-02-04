@@ -3,6 +3,8 @@ const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const paginationHelper = require('../../helpers/pagination');
 
+const systemConfig = require('../../config/system');
+
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
 
@@ -51,7 +53,7 @@ module.exports.index = async (req, res) => {
         keyword: objectSearch.keyword,
         paginationObject: paginationObject
     });
-}
+};
 
 // [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
@@ -62,7 +64,7 @@ module.exports.changeStatus = async (req, res) => {
     
     res.redirect(req.get('Referrer') || '/');
     // res.redirect('back') đã bị loại bỏ ở Express 5
-}
+};
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
@@ -94,7 +96,7 @@ module.exports.changeMulti = async (req, res) => {
             break;
     }
     res.redirect(req.get('Referrer') || '/');
-}
+};
 
 // [DELETE] /admin/products/delete-item/:id
 module.exports.deleteItem = async (req, res) => {
@@ -106,4 +108,26 @@ module.exports.deleteItem = async (req, res) => {
         ); // soft delete
     req.flash('success', `Xóa sản phẩm thành công`);
     res.redirect(req.get('Referrer') || '/');
-}
+};
+
+// [GET] /admin/products/create
+module.exports.create = (req, res) => {
+    res.render('admin/pages/products/create');
+};
+
+// [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+    
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if (req.body.position == '') {
+        const count = await Product.countDocuments();
+        req.body.position = count + 1;
+    } else {
+        req.body.position = parseInt(req.body.position);
+    }
+    const product = new Product(req.body);
+    await product.save();
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
