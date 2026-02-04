@@ -27,7 +27,7 @@ block main
         rows='5'
       )
     div(class='form-group')
-      label(for='price') Giá
+      label(for='price') $ Giá
       input(
         type='number'
         class='form-control'
@@ -37,7 +37,7 @@ block main
         min='0'
       )
     div(class='form-group')
-      label(for='discount') $ Giảm giá
+      label(for='discount') % Giảm giá
       input(
         type='number'
         class='form-control'
@@ -56,15 +56,30 @@ block main
         value='0'
         min='0'
       )
-    div(class='form-group')
+    div(
+      class='form-group'
+      upload-image
+    )
       label(for='thumbnail' class='d-block') Ảnh
       input(
         type='file'
-        class='form-control-file'
+        class='form-control-file d-block'
         id='thumbnail'
         name='thumbnail'
         accept='image/*'
+        upload-image-input
       )
+      div(class='image-preview-wrapper mt-3')
+        img(
+          src=''
+          upload-image-preview
+          class='image-preview'
+        )
+        span(
+          class='close-image-preview'
+          close-image-preview
+        ) x
+      
     div(class='form-group')
       label(for='position') Vị trí
       input(

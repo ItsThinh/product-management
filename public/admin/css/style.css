@@ -203,3 +203,47 @@ td:last-child {
     visibility: hidden !important;
     transform: translateY(-20px); /* Hiệu ứng bay lên nhẹ khi ẩn */
 }
+
+/* Container chứa ảnh và nút xóa */
+.image-preview-wrapper {
+  position: relative;
+  display: inline-block; /* Chỉ rộng bằng kích thước ảnh bên trong */
+}
+
+.image-preview {
+  width: 150px;
+  height: auto;
+  min-height: 150px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Nút xóa ảnh (Dấu x) */
+.close-image-preview {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 25px;
+  height: 25px;
+  background: #eb4d4b;
+  color: white;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: sans-serif;
+  transition: all 0.2s ease;
+}
+
+.close-image-preview:hover {
+  background: #ff7979;
+  transform: scale(1.1);
+}
+
+/* Ẩn ảnh và nút x khi chưa có link ảnh (src trống) */
+img[src=""], 
+img[src=""] ~ .close-image-preview {
+  display: none !important;
+}
