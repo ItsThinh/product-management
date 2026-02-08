@@ -154,7 +154,7 @@ module.exports.edit = async (req, res) => {
         res.render('admin/pages/products/edit', {
             pageTitle: "Chỉnh sửa sản phẩm",
             product: product
-        })
+        });
     } catch (error) {
         res.redirect(`${systemConfig.prefixAdmin}/products`);
     }
@@ -180,4 +180,22 @@ module.exports.editPatch = async (req, res) => {
     }
 
     res.redirect(req.get('Referrer') || '/');
+};
+
+module.exports.detail = async (req, res) => {
+
+    try {
+        const find = {
+            deleted: false,
+            _id: req.params.id
+        };
+
+        const product = await Product.findOne(find);
+
+        res.render('admin/pages/products/detail', {
+        product: product
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    }
 };

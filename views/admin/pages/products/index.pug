@@ -90,13 +90,16 @@ block main
                   a(
                     href=`${prefixAdmin}/products/edit/${product.id}`
                     class='btn btn-warning btn-sm'
-
                   ) Sửa
+                  a(
+                    href=`${prefixAdmin}/products/detail/${product.id}`
+                    class='btn btn-info btn-sm'
+                  ) Chi tiết
                   button(
                     class='btn btn-danger btn-sm ms-1'
                     button-delete
                     data-id=product.id
-                    ) Xóa
+                  ) Xóa
 
   +pagination(paginationObject)
 
