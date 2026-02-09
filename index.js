@@ -2,6 +2,7 @@ const express = require('express');
 const route = require('./routes/client/index.route');
 const adminRoute = require('./routes/admin/index.route');
 const database = require('./config/database');
+const dns = require('node:dns/promises');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
@@ -15,6 +16,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
 
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 database.connect();
 
 app.use(methodOverride('_method'));
