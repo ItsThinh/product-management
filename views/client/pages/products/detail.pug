@@ -1,0 +1,14 @@
+extends ../../layouts/default.pug
+
+block main
+  if (product.title)
+    h1.mb-4 #{product.title}
+  if (product.description)
+    div.mb-4 #{product.description}
+  if (product.price)
+    div.mb-4 Giá: <b>#{product.price}$</b>
+  if (product.discountPercentage)
+    div.mb-4 Giảm giá: <b>#{product.discountPercentage}%</b>
+  if (product.thumbnail)
+    div.mb-4
+      image(src=product.thumbnail style='width: 200px')

@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
 
+// [GET] /products
 module.exports.index = async (req, res) => {
 
     const products = await Product
@@ -20,3 +21,20 @@ module.exports.index = async (req, res) => {
         products: newProducts
     });
 };
+
+
+// [GET] products/:slug
+module.exports.detail = async (req, res) => {
+
+    const find = {
+        deleted: false,
+        status: 'active',
+        slug: req.params.slug
+    };
+    const product = await Product.findOne(find);
+    console.log(product);
+    
+    res.render('client/pages/products/detail', {
+        product: product
+    });
+}
