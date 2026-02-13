@@ -40,11 +40,22 @@ module.exports.index = async (req, res) => {
 
     // End Pagination
 
+    // Sort
+    let sort = {};
+    if (req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue;
+        console.log(sort);
+    } else {
+        sort.position = 'desc';
+    }
+    
+    // End Sort
+
     const products = await Product
     .find(find)
     .limit(paginationObject.limit)
     .skip(paginationObject.skip)
-    .sort({ position: 'desc' });
+    .sort(sort);
 
     res.render('admin/pages/products/index', {
         pageTitle: "Quản lý danh sách sản phẩm",
