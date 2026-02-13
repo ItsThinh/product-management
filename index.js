@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const route = require('./routes/client/index.route');
 const adminRoute = require('./routes/admin/index.route');
@@ -10,8 +11,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const systemConfig = require('./config/system');
-
-require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT;
