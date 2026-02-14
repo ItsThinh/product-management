@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const path = require('path');
 
 const systemConfig = require('./config/system');
 
@@ -19,6 +20,10 @@ dns.setServers(['1.1.1.1', '8.8.8.8']);
 database.connect();
 
 app.use(methodOverride('_method'));
+
+// Tiny MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// End Tiny MCE
 
 // Flash
 app.use(cookieParser('keyboard cat'));  // Lưu vào cookie
