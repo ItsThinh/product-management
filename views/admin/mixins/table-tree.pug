@@ -1,6 +1,6 @@
 mixin table-tree(records, level=1)
   - const prefix = new Array(level+1).join('-- ');
-  each item, index in records
+  each item in records
     tr 
       td
         input(
@@ -8,7 +8,7 @@ mixin table-tree(records, level=1)
           name='id'
           value=item.id
         )
-      td #{index + 1}
+      td #{item.index}
       td 
         img(src=item.thumbnail, alt=item.title, width='100px', height='auto')
       td #{prefix} #{item.title}
