@@ -50,42 +50,42 @@ module.exports.createPost = async (req, res) => {
 // [GET] /edit/:id
 module.exports.edit = async (req, res) => {
 
-    const record = await ProductCategory.findOne({
-        _id: req.params.id,
-        deleted: false
-    });
+    try {
+        const record = await ProductCategory.findOne({
+            _id: req.params.id,
+            deleted: false
+        });
 
-    const records = await ProductCategory.find({
-        deleted: false
-    });
-    const newRecords = createTreeHelper.tree(records);
+        const records = await ProductCategory.find({
+            deleted: false
+        });
+        const newRecords = createTreeHelper.tree(records);
 
-    console.log(record);
-    res.render('admin/pages/product-categories/edit.pug', {
-        pageTitle: 'Trang chỉnh sửa danh mục',
-        record: record,
-        records: newRecords
+        res.render('admin/pages/product-categories/edit.pug', {
+            pageTitle: 'Trang chỉnh sửa danh mục',
+            record: record,
+            records: newRecords
     });
+    } catch (e) {
+        res.redirect(`${systemConfig.prefixAdmin}/product-categories`);
+    }
+    
 }
 
 // [PATCH] /edit/:id
 module.exports.editPost = async(req, res) => {
     
-    try {
+    const oldRecord = await ProductCategory.findOne({ _id: req.params.id });
+    const oldPosition = oldRecord.position;
 
-        const oldRecord = await ProductCategory.findOne({ _id: req.params.id });
-        const oldPosition = oldRecord.position;
-
-        if (req.body.position === '') {
-            req.body.position = oldPosition;
-        } else {
-            req.body.position = parseInt(req.body.position);
-        }
-
-        await ProductCategory.updateOne({ _id: req.params.id }, req.body);
-
-        res.redirect(`${systemConfig.prefixAdmin}/product-categories`);
-    } catch(e) {
-        res.redirect(req.get('Referer') || '/');
+    if (req.body.position === '') {
+        req.body.position = oldPosition;
+    } else {
+        req.body.position = parseInt(req.body.position);
     }
+
+    await ProductCategory.updateOne({ _id: req.params.id }, req.body);
+
+    res.redirect(`${systemConfig.prefixAdmin}/product-categories`);
+    
 }
