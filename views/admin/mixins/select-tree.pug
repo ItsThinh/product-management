@@ -4,9 +4,9 @@ mixin _select-tree(records, parentId, level=1)
     option(
       value=item.id
       selected=parentId==item.id?true:false
-    ) #{prefix} #{item.title}
+    ) #{prefix} #{item.title} 
     - if(item.children && item.children.length > 0)
-      +select-tree(item.children, parentId, level+1)
+      +_select-tree(item.children, parentId, level+1)
 
 mixin select-tree(records, parentId='')
   +_select-tree(records, parentId)
