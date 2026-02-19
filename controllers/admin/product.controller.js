@@ -165,11 +165,18 @@ module.exports.edit = async (req, res) => {
 
         const product = await Product.findOne(find);
 
+        const productCategory = await ProductCategory.find({
+            deleted: false
+        });
+        const categoryTree = createTreeHelper.tree(productCategory);
+
         res.render('admin/pages/products/edit', {
             pageTitle: "Chỉnh sửa sản phẩm",
-            product: product
+            product: product,
+            categories: categoryTree
         });
     } catch (error) {
+        console.log(error);
         res.redirect(`${systemConfig.prefixAdmin}/products`);
     }
 };
@@ -189,6 +196,7 @@ module.exports.editPatch = async (req, res) => {
         req.flash('error', 'Cập nhật thất bại');
     }
 
+    console.log(req.body);
     res.redirect(req.get('Referrer') || '/');
 };
 
