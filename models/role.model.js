@@ -14,7 +14,9 @@ const roleSchema = new mongoose.Schema(
         },
         deletedAt: Date
     },
-    {timestamp: true}
+    {timestamps: true}
 );
 
 const Role = new mongoose.model('Role', roleSchema, 'roles');
+
+module.exports = Role;

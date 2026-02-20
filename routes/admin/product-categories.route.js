@@ -6,7 +6,7 @@ const upload = multer();
 const uploadCloud = require('../../middlewares/admin/uploadCloud.middleware');
 const validate = require('../../validates/admin/product-categories.validate');
 
-const controller = require('../../controllers/admin/product-categories.controller');
+const controller = require('../../controllers/admin/product-category.controller');
 
 router.get('/', controller.index);
 
