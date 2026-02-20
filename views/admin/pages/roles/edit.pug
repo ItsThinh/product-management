@@ -8,7 +8,7 @@ block main
   h1 #{pageTitle}
 
   form(
-    action=`${prefixAdmin}/roles/edit?_method=PATCH`
+    action=`${prefixAdmin}/roles/edit/${record.id}?_method=PATCH`
     id='form-create-product'
     method='POST'
   )

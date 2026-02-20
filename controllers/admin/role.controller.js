@@ -50,7 +50,10 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
 
     try {
-        await Role.updateOne(req.body);
+        await Role.updateOne(
+            { _id: req.params.id },
+            { $set: req.body}
+        );
 
         req.flash('success', `Đã cập nhật lại nhóm quyền [${req.body.title}] thành công`);
         res.redirect(`${systemConfig.prefixAdmin}/roles`);
