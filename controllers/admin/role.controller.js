@@ -1,6 +1,7 @@
 const Role = require('../../models/role.model');
 
 const systemConfig = require('../../config/system');
+const { get } = require('mongoose');
 
 // [GET] admin/roles
 module.exports.index = async (req, res) => {
@@ -21,6 +22,43 @@ module.exports.create = (req, res) => {
 module.exports.createPost = async (req, res) => {
     const record = new Role(req.body);
     await record.save();
-    req.flash('success', 'Thêm vai nhóm quyền thành công');
+    req.flash('success', 'Thêm nhóm quyền thành công');
     res.redirect(`${systemConfig.prefixAdmin}/roles`);
+}
+
+// [GET] admin/edit/:id
+module.exports.edit = async (req, res) => {
+
+    try {
+        const record = await Role.findOne(
+            {
+                _id: req.params.id,
+                deleted: false
+            }
+        );
+        res.render('admin/pages/roles/edit', {
+            record: record
+        });      
+    } catch (e) {
+        console.log(e);
+        res.redirect(`${systemConfig.prefixAdmin}/roles`);
+    }
+
+}
+
+// [PATCH] admin/edit/:id
+module.exports.editPatch = async (req, res) => {
+
+    try {
+        await Role.updateOne(req.body);
+
+        req.flash('success', `Đã cập nhật lại nhóm quyền [${req.body.title}] thành công`);
+        res.redirect(`${systemConfig.prefixAdmin}/roles`);
+
+    } catch (e) {
+        console.log(e);
+        req.flash('error', `Cập nhật nhóm quyền thất bại`);
+        res.redirect(req.get('Referer') || '/');
+    }
+
 }
