@@ -42,7 +42,7 @@ module.exports.loginPost = async (req, res) => {
         res.redirect(req.get('Referer') || '/');
         return;
     }
-
+    console.log(user);
     res.cookie('token', user.token);
     res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
 

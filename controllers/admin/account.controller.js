@@ -100,7 +100,7 @@ module.exports.editPatch = async (req, res) => {
             deleted: false
         }
     );
-    console.log(emailExist);
+
     if (emailExist) {
         req.flash('error', `Email ${req.body.email} đã tồn tại`);
         res.redirect(req.get('Referer') || '/');
@@ -112,14 +112,14 @@ module.exports.editPatch = async (req, res) => {
             email: req.body.email,
             phone: req.body.phone,
             avatar: req.body.avatar,
-            role: req.body.role_id,
+            role_id: req.body.role_id,
             status: req.body.status
         };
 
         if (req.body.password && req.body.password.trim() != '') {
             updateRecord.password = md5(req.body.password);
         }
-        
+
         await Account.updateOne({ _id: id }, updateRecord);
         req.flash('success', 'Cập nhật tài khoản thành công');
         res.redirect(req.get('Referer') || '/');

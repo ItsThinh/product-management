@@ -3,6 +3,7 @@ include ../../mixins/table-tree.pug
 include ../../mixins/alert.pug
 
 block main 
+  if role.permissions.includes('role_view')
   h1 Nhóm quyền
 
   +alert-success(5000)
@@ -35,14 +36,16 @@ block main
                 td #{item.title}
                 td #{item.description}
                 td 
-                  a(
-                    href=`${prefixAdmin}/roles/edit/${item.id}`
-                    class='btn btn-warning btn-sm'
-                  ) Sửa
+                  if role.permissions.includes('role_edit')
+                    a(
+                      href=`${prefixAdmin}/roles/edit/${item.id}`
+                      class='btn btn-warning btn-sm'
+                    ) Sửa
                   a(
                     href=`${prefixAdmin}/roles/detail/${item.id}`
                     class='btn btn-info btn-sm'
                   ) Chi tiết
-                  button(
-                    class='btn btn-danger btn-sm ms-1'
-                  ) Xóa
+                  if role.permissions.includes('role_delete')
+                    button(
+                      class='btn btn-danger btn-sm ms-1'
+                    ) Xóa

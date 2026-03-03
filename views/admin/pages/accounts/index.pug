@@ -1,67 +1,72 @@
 extends ../../layouts/default.pug
 
 block main 
-  h1 Danh sách tài khoản
+  if role.permissions.includes('account_view')
+    h1 Danh sách tài khoản
 
-  .card.mb-3 
-    .card-header Danh sách
-      .card-body
-        .row 
-          .col-8 
-          .col-4 
-            a(
-              href=`${prefixAdmin}/accounts/create`
-              class=`btn btn-outline-success`
-            ) + Thêm mới
+    .card.mb-3 
+      .card-header Danh sách
+        .card-body
+          .row 
+            if role.permissions.includes('account_create')
+              .col-8 
+              .col-4 
+                a(
+                  href=`${prefixAdmin}/accounts/create`
+                  class=`btn btn-outline-success`
+                ) + Thêm mới
 
-        table(class='.table.table-hover.table-sm')
-          thead 
-            tr
-              th STT
-              th Avatar
-              th Họ tên
-              th Phân quyền
-              th Email
-              th Trạng thái
-              th Hành động
+          table(class='.table.table-hover.table-sm')
+            thead 
+              tr
+                th STT
+                th Avatar
+                th Họ tên
+                th Phân quyền
+                th Email
+                th Trạng thái
+                th Hành động
 
-          tbody
-            each record, index in records
-              tr 
-                td #{index}
-                td 
-                  img(src=record.avatar, alt=record.fullName, width='100px', height='auto')
-                td #{record.fullName}
-                td #{record.role.title}
-                td #{record.email}
-                td 
-                  if (record.status == 'active')
-                    button(
-                      type='button'
-                      data-status=record.status
-                      data-id=record.id
-                      button-change-status
-                      class='badge bg-success'
-                    ) Hoạt động
-                  else 
-                    button(
-                      type='button'
-                      data-status=record.status
-                      data-id=record.id
-                      button-change-status
-                      class='badge bg-secondary'
-                    ) Dừng hoạt động
-                td 
-                  a(
-                    href=`${prefixAdmin}/accounts/edit/${record.id}`
-                    class='btn btn-warning btn-sm'
-                  ) Sửa
-                  a(
-                    href=`${prefixAdmin}/accounts/detail/${record.id}`
-                    class='btn btn-info btn-sm'
-                  ) Chi tiết
-                  button(
-                    class='btn btn-danger btn-sm ms-1'
-                    button-delete
-                    data-id=record.id
-                  ) Xóa
+            tbody
+              each record, index in records
+                tr 
+                  td #{index}
+                  td 
+                    img(src=record.avatar, alt=record.fullName, width='100px', height='auto')
+                  td #{record.fullName}
+                  td #{record.role.title}
+                  td #{record.email}
+                  td 
+                    if role.permissions.includes('account_edit')
+                      if (record.status == 'active')
+                        button(
+                          type='button'
+                          data-status=record.status
+                          data-id=record.id
+                          button-change-status
+                          class='badge bg-success'
+                        ) Hoạt động
+                      else 
+                        button(
+                          type='button'
+                          data-status=record.status
+                          data-id=record.id
+                          button-change-status
+                          class='badge bg-secondary'
+                        ) Dừng hoạt động
+                  td 
+                    if role.permissions.includes('account_edit')
+                      a(
+                        href=`${prefixAdmin}/accounts/edit/${record.id}`
+                        class='btn btn-warning btn-sm'
+                      ) Sửa
+                    a(
+                      href=`${prefixAdmin}/accounts/detail/${record.id}`
+                      class='btn btn-info btn-sm'
+                    ) Chi tiết
+                    if role.permissions.includes('account_delete')
+                      button(
+                        class='btn btn-danger btn-sm ms-1'
+                        button-delete
+                        data-id=record.id
+                      ) Xóa
