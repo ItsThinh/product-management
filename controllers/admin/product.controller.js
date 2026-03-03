@@ -1,5 +1,6 @@
 const Product = require('../../models/product.model');
 const ProductCategory = require('../../models/productCategory.model');
+const Account = require('../../models/account.model');
 const createTreeHelper = require('../../helpers/createTree');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
@@ -60,7 +61,12 @@ module.exports.index = async (req, res) => {
     .sort(sort);
 
     // Created by
-    
+    for (const product of products) {
+        const user = await Account.findOne({ _id: product.createdBy.account_id });
+        if (user) {
+            product.createdByFullName = user.fullName;
+        }
+    }
     // Created by
 
     res.render('admin/pages/products/index', {

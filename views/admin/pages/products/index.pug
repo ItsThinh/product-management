@@ -74,7 +74,7 @@ block main
                   td #{product.title}
                   td #{product.price}$
                   td 
-                    | #{product.createdBy.account_id}
+                    | #{product.createdByFullName}
                     br
                     +formatDate(product.createdBy.createdAt)
                     br
