@@ -10,6 +10,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+const moment = require('moment');
 
 const systemConfig = require('./config/system');
 
@@ -46,6 +47,7 @@ adminRoute(app);
 // App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // Biến prefixAdmin bây giờ sẽ có thể được gọi ở bất cứ file pug nào
+app.locals.moment = moment;
 
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`);

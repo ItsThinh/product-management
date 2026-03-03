@@ -59,6 +59,10 @@ module.exports.index = async (req, res) => {
     .skip(paginationObject.skip)
     .sort(sort);
 
+    // Created by
+    
+    // Created by
+
     res.render('admin/pages/products/index', {
         pageTitle: "Quản lý danh sách sản phẩm",
         products: products,
@@ -148,6 +152,10 @@ module.exports.createPost = async (req, res) => {
     } else {
         req.body.position = parseInt(req.body.position);
     }
+
+    req.body.createBy = {
+        account_id: res.locals.user.id
+    };
     
     const product = new Product(req.body);
     await product.save();

@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 
 block main 
   if role.permissions.includes('product_view')
@@ -53,6 +54,7 @@ block main
                 th Hình ảnh
                 th Tiêu đề
                 th Giá
+                th Người tạo
                 th Vị trí
                 th Trạng thái
                 th Hành động
@@ -71,6 +73,12 @@ block main
                     img(src=product.thumbnail, alt=product.title, width='100px', height='auto')
                   td #{product.title}
                   td #{product.price}$
+                  td 
+                    | #{product.createdBy.account_id}
+                    br
+                    +formatDate(product.createdBy.createdAt)
+                    br
+                    +formatTime(product.createdBy.createdAt)
                   td 
                     input(
                       type='number'

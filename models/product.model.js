@@ -20,12 +20,22 @@ const productSchema = new mongoose.Schema({
   stock: Number,
   thumbnail: String,
   status: String,
+  createBy: {
+    account_id: String,
+    createdAt: {
+      type: String,
+      default: Date.now
+    }
+  },
   deleted: {
     type: Boolean,
     default: false
   },
   position: Number,
-  deletedAt: Date
+  deletedBy: {
+    account_id: String,
+    deletedAt: Date
+  }
 }, {
   timestamps: true
 });
