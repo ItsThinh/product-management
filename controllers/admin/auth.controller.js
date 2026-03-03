@@ -31,7 +31,7 @@ module.exports.loginPost = async (req, res) => {
         passwordCheck = md5(req.body.password) == user.password;
     }
     
-    if (!user && !passwordCheck) {
+    if (!user || !passwordCheck) {
         req.flash('error', 'Sai email hoặc sai mật khẩu');
         res.redirect(req.get('Referer') || '/');
         return;
