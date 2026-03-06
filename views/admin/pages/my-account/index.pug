@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main 
+
+  +alert-success(5000)
+
+  div.d-inline-block
+  label.form-label.d-block Họ và tên
+  input.form-control(
+    type="text" 
+    value=user.fullName
+    readonly 
+    style="width: fit-content;"
+  )
+  div.d-inline-block
+  label.form-label.d-block Email
+  input.form-control(
+    type="text" 
+    value=user.email
+    readonly 
+    style="width: fit-content;"
+  )
+  div.d-inline-block
+  label.form-label.d-block Số điện thoại
+  input.form-control(
+    type="text" 
+    value=user.phone
+    readonly 
+    style="width: fit-content;"
+  )
+  div.d-inline-block
+  label.form-label.d-block Phân quyền
+  input.form-control(
+    type="text" 
+    value=user.roleTitle
+    readonly 
+    style="width: fit-content;"
+  )
+  div.d-flex.align-items-end.gap-3.mt-3
+    div.image-preview-wrapper
+      img(
+        src=user.avatar
+        class='image-preview'
+      )
+  div
+    a(
+      class='btn btn-primary'
+      href=`${prefixAdmin}/my-account/edit`
+    ) Thay đổi thông tin
+  

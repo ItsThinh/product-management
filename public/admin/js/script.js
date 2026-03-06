@@ -147,8 +147,8 @@ if (showAlert) {
 // Upload Image
 const uploadImage = document.querySelector('[upload-image]');
 if (uploadImage) {
-    uploadImageInput = uploadImage.querySelector('[upload-image-input]');
-    uploadImagePreview = uploadImage.querySelector('[upload-image-preview]');
+    const uploadImageInput = uploadImage.querySelector('[upload-image-input]');
+    const uploadImagePreview = uploadImage.querySelector('[upload-image-preview]');
 
     uploadImageInput.addEventListener('change', (e) => {
         if (uploadImagePreview.src != '' && uploadImagePreview.src.startsWith('blob:')) {
