@@ -55,6 +55,7 @@ block main
                 th Tiêu đề
                 th Giá
                 th Người tạo
+                th Người cập nhật
                 th Vị trí
                 th Trạng thái
                 th Hành động
@@ -62,23 +63,39 @@ block main
             tbody
               each product, index in products
                 tr 
+
                   td
                     input(
                       type='checkbox'
                       name='id'
                       value=product.id
                     )
+
                   td #{(paginationObject.currentPage - 1) * paginationObject.limit + index + 1}
+
                   td 
                     img(src=product.thumbnail, alt=product.title, width='100px', height='auto')
+
                   td #{product.title}
+
                   td #{product.price}$
+
                   td 
-                    | #{product.createdByFullName}
-                    br
-                    +formatDate(product.createdBy.createdAt)
-                    br
-                    +formatTime(product.createdBy.createdAt)
+                    if (product.createdBy.account_id)
+                      | #{product.createdByFullName}
+                      br
+                      +formatDate(product.createdBy.createdAt)
+                      br
+                      +formatTime(product.createdBy.createdAt)
+
+                  td 
+                    if product.lastUpdatedByFullName
+                      | #{product.lastUpdatedByFullName}
+                      br
+                      +formatDate(product.lastUpdateTime)
+                      br
+                      +formatTime(product.lastUpdateTime)
+
                   td 
                     input(
                       type='number'
@@ -87,6 +104,7 @@ block main
                       min='1'
                       name='position'
                     )
+
                   td 
                     if role.permissions.includes('product_edit')
                       if (product.status == 'active')
@@ -105,6 +123,7 @@ block main
                           button-change-status
                           class='badge bg-secondary'
                         ) Dừng hoạt động
+
                   td 
                     if role.permissions.includes('product_edit')
                       a(
