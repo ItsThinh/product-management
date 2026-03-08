@@ -9,11 +9,17 @@ module.exports.index = async (req, res) => {
             status: 'active',
             featured: '1'
     });
-
     const newProductsFeatured = productHelper.addFinalPrice(productsFeatured);
+
+    const productsNew = await Product.find({
+            deleted: false,
+            status: 'active'
+    }).sort({ position: 'desc' }).limit(6);
+    const newProductsNew = productHelper.addFinalPrice(productsNew);
 
     res.render('client/pages/home/index', {
         pageTitle: "Trang chủ",
-        productsFeatured: newProductsFeatured
+        productsFeatured: newProductsFeatured,
+        productsNew: newProductsNew
     });
 };
