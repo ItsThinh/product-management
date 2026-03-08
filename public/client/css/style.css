@@ -154,3 +154,72 @@ a {
   text-align: center;
   border-radius: 4px;
 }
+
+/* product category menu */
+/* Reset cơ bản cho menu */
+.inner-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end; /* Đẩy toàn bộ menu sang phải */
+}
+
+.inner-menu ul li {
+  position: relative; /* Làm gốc tọa độ cho menu con */
+}
+
+.inner-menu ul li a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* --- Menu Con (Cấp 2, 3...) --- */
+.inner-menu ul li ul {
+  position: absolute;
+  top: 100%; /* Hiện ngay dưới menu cha */
+  right: 0;    /* Căn lề phải bằng với menu cha */
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-width: 200px;
+  
+  /* Hiệu ứng ẩn ban đầu */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px); 
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+/* Menu cấp 3 trở đi: Hiện sang bên trái của menu cha */
+.inner-menu ul li ul li ul {
+  top: 0;
+  right: 100%; /* Đẩy sang bên trái */
+  margin-right: 2px; /* Khoảng cách nhỏ tránh dính sát */
+}
+
+/* --- Hiệu ứng Hover --- */
+.inner-menu ul li:hover > ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Trang trí thêm cho các mục có menu con (tùy chọn) */
+.inner-menu ul li:has(ul) > a::after {
+  content: ' ▾';
+  font-size: 10px;
+}
+.inner-menu ul li ul li:has(ul) > a::after {
+  content: ' ◂'; /* Mũi tên chỉ sang trái cho menu cấp 3 */
+}
+
+/* Hover background cho các item */
+.inner-menu ul li ul li:hover > a {
+  background-color: #f8f9fa;
+  color: #007bff;
+}

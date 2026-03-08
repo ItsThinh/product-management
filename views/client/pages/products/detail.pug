@@ -4,7 +4,7 @@ block main
   if (product.title)
     h1.mb-4 #{product.title}
   if (product.description)
-    div.mb-4 #{product.description}
+    div.mb-4 !{product.description}
   if (product.price)
     div.mb-4 Giá: <b>#{product.price}$</b>
   if (product.discountPercentage)
