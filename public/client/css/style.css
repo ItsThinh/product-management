@@ -104,12 +104,35 @@ a {
 }
 
 .product-item .inner-image {
+  position: relative; /* Quan trọng */
   width: 100%;
   aspect-ratio: 1 / 1;
   background: #f8f8f8;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.product-item .inner-featured {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(45deg, #ff8a00, #ffc107); /* Hiệu ứng gradient */
+  color: white;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.product-item:hover .inner-featured {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
 }
 
 .product-item .inner-image img {
