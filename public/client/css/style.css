@@ -246,3 +246,33 @@ a {
   background-color: #f8f9fa;
   color: #007bff;
 }
+
+/* TRANG CHI TIẾT SẢN PHẨM */
+/* Làm cho ảnh sản phẩm luôn cân đối */
+.inner-image img {
+  object-fit: contain;
+  max-height: 500px;
+  transition: transform 0.3s ease;
+}
+
+.inner-image:hover img {
+  transform: scale(1.02); /* Hiệu ứng zoom nhẹ khi di chuột vào ảnh */
+}
+
+/* Gạch chân giá cũ nếu có giảm giá */
+.text-decoration-line-through {
+  text-decoration: line-through;
+}
+
+/* Nâng cấp form input số lượng */
+.form-add-to-cart input:focus {
+  box-shadow: none;
+  border-color: #28a745;
+}
+
+/* Làm đẹp phần mô tả */
+.product-description .content {
+  line-height: 1.6;
+  color: #444;
+  background-color: #fdfdfd;
+}

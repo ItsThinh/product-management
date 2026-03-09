@@ -1,14 +1,70 @@
 extends ../../layouts/default.pug
 
 block main
-  if (product.title)
-    h1.mb-4 #{product.title}
-  if (product.description)
-    div.mb-4 !{product.description}
-  if (product.price)
-    div.mb-4 Giá: <b>#{product.price}$</b>
-  if (product.discountPercentage)
-    div.mb-4 Giảm giá: <b>#{product.discountPercentage}%</b>
-  if (product.thumbnail)
-    div.mb-4
-      image(src=product.thumbnail style='width: 200px')
+  .container.my-5
+    .product-detail
+      .row
+        //- Bên trái: Hình ảnh sản phẩm
+        .col-md-6
+          if (product.thumbnail)
+            .inner-image.border.rounded.overflow-hidden
+              img(src=product.thumbnail, alt=product.title, class="img-fluid w-100")
+          else
+            .inner-image.border.rounded.bg-light.d-flex.align-items-center.justify-content-center(style="height: 400px")
+              span.text-muted Không có hình ảnh
+
+        //- Bên phải: Thông tin chi tiết
+        .col-md-6
+          if (product.title)
+            h1.mb-3.text-primary #{product.title}
+
+          if (product.category)
+            div.mb-3
+              span.badge.badge-info.p-2 Danh mục: #{product.category.title}
+
+          .price-box.mb-4.p-3.bg-light.rounded
+            if (product.finalPrice)
+              div.h3.text-danger.font-weight-bold $#{product.finalPrice}
+            
+            if (product.discountPercentage)
+              span.text-muted.text-decoration-line-through.mr-2 Giá gốc: $#{product.price}
+              span.badge.badge-danger -#{product.discountPercentage}%
+
+          if (product.stock && product.stock > 0)
+            div.mb-3
+              span.text-success ● Còn hàng 
+              span.text-muted (Số lượng: #{product.stock})
+          else 
+            div.mb-3.text-danger ● Hết hàng
+
+          //- Form đặt hàng
+          form(
+            action=`/cart/add/${product.id}`
+            method='POST'
+            class="form-add-to-cart"
+          )
+            .form-group.d-flex.align-items-center
+              label.mr-3.mb-0 Số lượng:
+              input(
+                class='form-control border-primary'
+                type='number'
+                name='quantity'
+                value='1'
+                min='1'
+                max=product.stock
+                style='width: 100px'
+              )
+            button(
+              type='submit'
+              class='btn btn-success btn-lg btn-block mt-3 shadow-sm'
+              disabled=(product.stock <= 0)
+            ) 
+              i.fa.fa-shopping-cart.mr-2
+              | Thêm vào giỏ hàng
+
+      //- Phần mô tả bên dưới
+      if (product.description)
+        hr.my-5
+        .product-description
+          h3.mb-3 Thông tin chi tiết
+          .content.border.p-4.rounded !{product.description}

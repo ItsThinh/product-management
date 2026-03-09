@@ -7,3 +7,10 @@ module.exports.addFinalPrice = (products) => {
 
     return newProducts;
 }
+
+module.exports.calculateFinalPrice = (product) => {
+
+    let newPrice = Math.floor((product.price - product.discountPercentage / 100 * product.price) * 100) / 100;
+    newPrice = newPrice.toFixed(2);
+    return newPrice;
+}

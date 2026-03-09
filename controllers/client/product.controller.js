@@ -21,18 +21,28 @@ module.exports.index = async (req, res) => {
     });
 };
 
-// [GET] products/:slug
+// [GET] products/detail/:slug
 module.exports.detail = async (req, res) => {
 
     const find = {
         deleted: false,
         status: 'active',
-        slug: req.params.slug
+        slug: req.params.slugProduct
     };
     const product = await Product.findOne(find);
-    console.log(product);
+    
+    const category = await ProductCategory.findOne({
+        _id: product.product_category_id,
+        status: 'active',
+        deleted: false
+    });
+
+    product.category = category;
+
+    product.finalPrice = productHelper.calculateFinalPrice(product);
     
     res.render('client/pages/products/detail', {
+        pageTitle: product.title,
         product: product
     });
 }
