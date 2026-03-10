@@ -1,0 +1,14 @@
+extends ../../layouts/default.pug
+include ../../mixins/product-layout.pug
+include ../../mixins/box-head.pug
+
+block main 
+  .container.my-3 
+    .row 
+      .col-12
+        +box-head(pageTitle)
+
+    if products.length > 0
+      +product-layout(products)
+    else 
+      h3 Không tìm thấy sản phẩm
