@@ -24,6 +24,10 @@ module.exports.index = async (req, res) => {
 // [GET] products/detail/:slug
 module.exports.detail = async (req, res) => {
 
+    if (req.params.slugProduct === 'undefined') {
+        return res.send("Sản phẩm này chưa có slug (có thể là dữ liệu schema cũ)");
+    }
+
     const find = {
         deleted: false,
         status: 'active',
@@ -31,6 +35,10 @@ module.exports.detail = async (req, res) => {
     };
     const product = await Product.findOne(find);
     
+    if (!product.product_category_id) {
+        return res.send("Sản phẩm này không có danh mục");
+    }
+
     const category = await ProductCategory.findOne({
         _id: product.product_category_id,
         status: 'active',
