@@ -5,6 +5,15 @@ module.exports.cartId = async (req, res, next) => {
     if (!req.cookies.cartId) {
         const cart = new Cart();
         await cart.save();
+        
+        console.log("CART CREATED", {
+            time: new Date().toISOString(),
+            cartId: cart.id,
+            url: req.originalUrl,
+            method: req.method,
+            cookie: req.cookies.cartId,
+            ip: req.ip
+        });
 
         const cookieExpires = 365 * 24 * 60 * 60 * 1000;
 
