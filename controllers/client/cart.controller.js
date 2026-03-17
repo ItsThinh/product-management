@@ -99,3 +99,24 @@ module.exports.delete = async (req, res) => {
 
     res.redirect(req.get('Referer'));
 }
+
+// [GET] /cart/update/:productId/:quantity
+module.exports.update = async (req, res) => {
+    const productId = req.params.productId;
+    const quantity = parseInt(req.params.quantity);
+
+    console.log(productId);
+    console.log(quantity);
+
+    await Cart.updateOne(
+        { 
+            _id: req.cookies.cartId,
+            'products.product_id': productId
+        },
+        {
+            $set: { 'products.$.quantity': quantity }
+        }
+    )
+
+    res.redirect(req.get('Referer'));
+}

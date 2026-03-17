@@ -13,5 +13,3 @@ if (showAlert) {
     }, time);
 }
 // End Show Alert
-
-console.log('kkkk');

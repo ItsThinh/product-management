@@ -34,12 +34,13 @@ block main
                     td $#{product.newPrice}
                     td
                       input(
+                        quantity-input
                         type="number" 
                         value=product.quantity 
                         min="1" 
                         class="form-control" 
                         style="width: 70px;"
-                        item-id=product.id
+                        product-id=product._id
                       )
                     td.fw-bold $#{product.total}
                     td.text-center
@@ -68,3 +69,5 @@ block main
               i.fa-solid.fa-cart-shopping.fa-4x.text-muted
             p.fs-5 Giỏ hàng của bạn đang trống.
             a.btn.btn-primary(href="/products") Quay lại mua sắm ngay
+
+  script(src='client/js/cart.js')
