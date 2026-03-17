@@ -87,3 +87,15 @@ module.exports.index = async (req, res) => {
         total: total
     });
 }
+
+// [GET] /cart/delete/:productId
+module.exports.delete = async (req, res) => {
+    const productId = req.params.productId;
+
+    await Cart.updateOne(
+        { _id: req.cookies.cartId },
+        { $pull: { products: { product_id: productId } } }
+    );
+
+    res.redirect(req.get('Referer'));
+}
