@@ -1,5 +1,6 @@
 const Cart = require('../../models/cart.model');
 const Product = require('../../models/product.model');
+const productHelper = require('../../helpers/product');
 
 // [POST] /cart/add/:productId
 module.exports.addPost = async (req, res) => {
@@ -49,4 +50,40 @@ module.exports.addPost = async (req, res) => {
     }
     
     res.redirect(req.get('Referer') || '/');
+}
+
+// [GET] /cart/
+module.exports.index = async (req, res) => {
+
+    const cart = await Cart.findOne({ _id: req.cookies.cartId }).select('products').lean();
+
+    const productIds = cart.products.map(item => item.product_id);
+
+    const products = await Product.find(
+        { _id: { $in: productIds }}
+    ).lean();
+
+    // Dùng map để lưu cặp id - quantity để lát nữa dùng cho việc gán quantity theo id của các product
+    const quantityMap = new Map(
+        cart.products.map(item => [item.product_id.toString(), item.quantity])
+    );
+
+    const cartItems = productHelper.addFinalPrice(products)
+        .map(item => {
+            const quantity = quantityMap.get(item._id.toString()) || 0;
+            return {
+                ...item,
+                quantity: quantity,
+                total: item.newPrice * quantity
+            }
+        }
+    );
+
+    const total = cartItems.reduce((sum, item) => sum + item.newPrice * item.quantity, 0);
+
+    res.render('client/pages/cart/index', {
+        pageTitle: 'Giỏ hàng',
+        products: cartItems,
+        total: total
+    });
 }
