@@ -1,0 +1,98 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block main 
+  +alert-success(5000)
+  +alert-error(5000)
+
+  .container.my-3
+    .row 
+      .col-12
+        +box-head('Đặt hàng')
+
+    if (products && products.length > 0)
+      form(action="/checkout/order" method="POST")
+        .row
+          //- Cột trái: Thông tin khách hàng
+          .col-md-7
+            .card.shadow-sm.mb-4
+              .card-header.bg-primary.text-white
+                h5.mb-0 Thông tin nhận hàng
+              .card-body
+                .mb-3
+                  label(for="fullName" class="form-label") Họ tên
+                  input(
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    class="form-control"
+                    placeholder="Nhập họ tên đầy đủ"
+                    required
+                  )
+                .mb-3
+                  label(for="phone" class="form-label") Số điện thoại
+                  input(
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    class="form-control"
+                    placeholder="Nhập số điện thoại"
+                    required
+                  )
+                .mb-3
+                  label(for="address" class="form-label") Địa chỉ nhận hàng
+                  input(
+                    type="text"
+                    id="address"
+                    name="address"
+                    class="form-control"
+                    placeholder="Số nhà, tên đường, phường/xã..."
+                    required
+                  )
+
+          //- Cột phải: Tóm tắt đơn hàng (Có hiển thị ảnh)
+          .col-md-5
+            .card.shadow-sm
+              .card-header.bg-light
+                h5.mb-0 Đơn hàng của bạn
+              .card-body
+                table.table.align-middle
+                  thead
+                    tr
+                      th(style="width: 80px") Ảnh
+                      th Sản phẩm
+                      th.text-end Tổng tiền
+                  tbody
+                    each product in products
+                      tr
+                        td
+                          img(
+                            src=product.thumbnail
+                            alt=product.title
+                            width="60px"
+                            class="img-thumbnail"
+                          )
+                        td
+                          span.fw-bold #{product.title} 
+                          br
+                          small.text-muted Số lượng: #{product.quantity}
+                        td.text-end.fw-bold $#{product.total}
+                
+                hr
+                
+                .d-flex.justify-content-between.mb-3
+                  span.fs-5 Tổng cộng:
+                  span.fs-5.fw-bold.text-danger $#{total}
+                
+                .d-grid.gap-2
+                  button.btn.btn-success.btn-lg(type="submit") XÁC NHẬN ĐẶT HÀNG
+                  a.btn.btn-outline-secondary(href="/cart") Quay lại giỏ hàng
+
+    else 
+      .row
+        .col-12
+          .alert.alert-warning.text-center
+            | Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán.
+            br
+            a(href="/products" class="btn btn-primary mt-3") Mua sắm ngay

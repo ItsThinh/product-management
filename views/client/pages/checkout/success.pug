@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-5
+    .row.justify-content-center
+      .col-md-8
+        .card.shadow-sm.border-0.text-center.p-5
+          //- Icon thành công (Dùng FontAwesome)
+          .mb-4
+            i.fa-solid.fa-circle-check.fa-5x.text-success
+          
+          h2.mb-3.fw-bold Đặt hàng thành công!
+          p.text-muted.mb-4 Cảm ơn bạn đã tin tưởng mua sắm tại cửa hàng của chúng tôi. Đơn hàng của bạn đang được xử lý và sẽ sớm được giao đến bạn.
+
+          //- Thông tin đơn hàng tóm tắt
+          if (order)
+            .bg-light.p-4.rounded.mb-4.text-start
+              h5.mb-3.border-bottom.pb-2 <i class="fa-solid fa-file-invoice me-2"></i>Chi tiết đơn hàng
+              .row.mb-2
+                .col-sm-4.fw-bold Mã đơn hàng:
+                .col-sm-8.text-primary #{order._id.toString()}
+              .row.mb-2
+                .col-sm-4.fw-bold Người nhận:
+                .col-sm-8 #{order.userInfo.fullName}
+              .row.mb-2
+                .col-sm-4.fw-bold Số điện thoại:
+                .col-sm-8 #{order.userInfo.phone}
+              .row.mb-2
+                .col-sm-4.fw-bold Địa chỉ:
+                .col-sm-8 #{order.userInfo.address}
+
+          .d-grid.gap-2.d-md-flex.justify-content-md-center
+            a.btn.btn-primary.btn-lg.px-5(href="/products") 
+              i.fa-solid.fa-cart-shopping.me-2
+              | Tiếp tục mua sắm
+            a.btn.btn-outline-secondary.btn-lg.px-5(href="/") 
+              i.fa-solid.fa-house.me-2
+              | Về trang chủ
