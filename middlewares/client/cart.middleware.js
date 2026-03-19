@@ -3,38 +3,15 @@ const Cart = require('../../models/cart.model');
 module.exports.cartId = async (req, res, next) => {
     
     if (!req.cookies.cartId) {
-        const cart = new Cart();
-        await cart.save();
-        
-        // CART LOG
-        console.log("CART CREATED", {
-            time: new Date().toISOString(),
-            cartId: cart.id,
-            url: req.originalUrl,
-            method: req.method,
-            cookie: req.cookies.cartId,
-            ip: req.ip
-        });
-
-        const fs = require('fs');
-        const path = require('path');
-
-        const logPath = path.join(__dirname, '../../cart.log');
-
-        fs.appendFileSync(
-            logPath,
-            JSON.stringify({
-                time: new Date().toISOString(),
-                cartId: cart.id,
-                url: req.originalUrl,
-                method: req.method,
-                cookie: req.cookies.cartId,
+        const cart = new Cart({
+            createdMeta: {
                 ip: req.ip,
                 userAgent: req.headers['user-agent'],
-                pid: process.pid
-            }) + '\n'
-        );
-        // END CART LOG
+                url: req.originalUrl,
+                method: req.method
+            }
+        });
+        await cart.save();
 
         const cookieExpires = 365 * 24 * 60 * 60 * 1000;
 

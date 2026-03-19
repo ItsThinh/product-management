@@ -8,7 +8,13 @@ const cartSchema = new mongoose.Schema(
                 product_id: String,
                 quantity: Number
             }
-        ]
+        ],
+        createdMeta: {
+            ip: String,
+            userAgent: String,
+            url: String,
+            method: String
+        }
     },
     {
         timestamps: true
