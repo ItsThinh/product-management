@@ -282,9 +282,12 @@ a {
 /* Container cố định góc màn hình */
 .message.info {
   position: fixed;
-  top: 20px;
+  top: 80px; /* Đẩy xuống dưới Header (Header thường cao 60-70px) */
   right: 20px;
-  z-index: 1000;
+  z-index: 9999; /* Đảm bảo nổi trên tất cả các lớp khác */
+  
+  /* QUAN TRỌNG: Cho phép chuột click xuyên qua cái khung tàng hình này */
+  pointer-events: none; 
 }
 
 /* Style cơ bản cho Alert */
@@ -297,14 +300,18 @@ a {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  transition: all 0.4s ease; /* Tạo hiệu ứng mượt khi thêm class alert-hidden */
+  transition: all 0.4s ease;
+  
+  /* QUAN TRỌNG: Khi Alert hiện ra thì nó PHẢI nhận được click (để bấm nút X) */
+  pointer-events: auto; 
 }
 
-/* Khi có class alert-hidden: Alert sẽ mờ dần và trượt sang phải */
+/* Khi có class alert-hidden */
 .alert.alert-hidden {
   opacity: 0;
   transform: translateX(100%);
-  pointer-events: none; /* Ngăn người dùng click khi đang ẩn */
+  /* Khi ẩn đi thì tuyệt đối không chặn click nữa */
+  pointer-events: none; 
 }
 
 /* Màu sắc Success & Error */

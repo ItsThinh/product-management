@@ -1,42 +1,43 @@
 include ../mixins/sub-menu.pug
 
-//- Thẻ <header> với class="header". Các thẻ bên dưới chỉ ghi tên class mà không ghi thẻ thì mặc định là thẻ <div>
-header.header
-  //- Cách trái và phải 1 đoạn
+//- Thay py-3 thành py-2 để Header mỏng lại
+header.header.py-2.border-bottom.bg-white
   .container
-    //- Chia hàng và chia cột
     .row.align-items-center
-      //- Chiếm 3 cột
-      .col-3
+      //- 1. Logo (Giảm nhẹ chiều cao)
+      .col-auto
         .inner-logo
           a(href="/")
-            img(src="/client/images/logo.svg", alt="logo")
+            img(src="/client/images/logo.svg", alt="logo", style="height: 30px;")
 
-      .col-5 
-        form(
-          action=`/search`
-          method='GET'
-        )
-          div(class='form-group d-flex mb-0')
-            input(
-              class='form-control'
+      //- 2. Thanh tìm kiếm (Làm gọn lại)
+      .col.mx-4
+        form(action=`/search` method='GET')
+          .input-group.input-group-sm
+            input.form-control(
               type='text'
-              placeholder='Nhập từ khóa...'
+              placeholder='Tìm kiếm...'
               name='keyword'
+              value=keyword
+              style="border-radius: 20px 0 0 20px;"
             )
-            button(
-              class='btn btn-primary'
+            button.btn.btn-primary(
               type='submit'
+              style="border-radius: 0 20px 20px 0;"
             ) Tìm
 
-      //- Chiếm 4 cột
-      .col-4
+      //- 3. Menu (Sát lại gần nhau hơn)
+      .col-auto
         .inner-menu
-          ul 
-            li
-              a(href="/") Trang chủ
-            li(class='sub-menu')
-              a(href="/products") Sản phẩm
+          //- Giảm gap-4 xuống gap-3 để menu trông gọn gàng
+          ul.d-flex.align-items-center.list-unstyled.mb-0.gap-3
+            li.sub-menu.position-relative
+              a.text-decoration-none.custom-link.small(href="/products") Sản phẩm
               +sub-menu(layoutProductCategory, '/products')
+            
             li
-              a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : 0})
+              a.text-decoration-none.custom-link.small(href="/cart") 
+                | Giỏ hàng (#{miniCart ? miniCart.totalQuantity : 0})
+            
+            li
+              a.text-decoration-none.custom-link.small(href="/user/register") Đăng ký
