@@ -33,3 +33,13 @@ module.exports.loginPost = (req, res, next) => {
 
     next();
 }
+
+module.exports.forgotPasswordPost = (req, res, next) => {
+
+    if (!req.body.email || !req.body.email.trim()) {
+        req.flash('error', 'Vui lòng nhập email');
+        return res.redirect(req.get('Referer') || '/user/login');
+    }
+
+    next();
+}

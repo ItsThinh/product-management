@@ -1,7 +1,6 @@
 extends ../../layouts/default.pug
 
 block main
-
   .container.my-5
     .row.justify-content-center
       .col-md-6.col-lg-5
@@ -19,7 +18,9 @@ block main
                   required
                 )  
               .mb-4
-                label.form-label.fw-bold(for="password") Mật khẩu
+                .d-flex.justify-content-between
+                  label.form-label.fw-bold(for="password") Mật khẩu
+                  a.small.text-decoration-none(href="/user/password/forgot") Quên mật khẩu?
                 input#password.form-control.form-control-lg(
                   type="password" 
                   name="password" 
@@ -30,7 +31,6 @@ block main
                 button.btn.btn-primary.btn-lg.fw-bold(type="submit") 
                   | Đăng nhập
               
-            
             hr
 
             .text-center
