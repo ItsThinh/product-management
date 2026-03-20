@@ -87,8 +87,39 @@ module.exports.order = async (req, res) => {
 
 // [GET] checkout/success/:orderId
 module.exports.success = async (req, res) => {
-    const order = await Order.findOne({ _id: req.params.orderId });
-    res.render('client/pages/checkout/success.pug',{
+    const order = await Order.findOne({ _id: req.params.orderId }).lean();
+
+    const productIds = order.products.map(item => item.product_id);
+
+    const orderProducts = await Product.find({ _id: { $in: productIds } }).select('_id title thumbnail').lean();
+
+    const productInfoMap = new Map(
+        orderProducts.map(item => 
+            [
+                item._id.toString(),
+                { 
+                    title: item.title,
+                    thumbnail: item.thumbnail 
+                }
+            ]
+        )
+    );
+
+    order.products = 
+        productHelper.addFinalPrice(order.products)
+        .map(item => {
+            const info = productInfoMap.get(item.product_id.toString());
+            return {
+                ...item,
+                title: info?.title,
+                thumbnail: info?.thumbnail
+            };
+        });
+
+    order.total = order.products.reduce((sum, item) => sum + item.newPrice * item.quantity, 0);
+
+    res.render('client/pages/checkout/success.pug', {
+        pageTitle: 'Đơn hàng',
         order: order   
     });
 }
