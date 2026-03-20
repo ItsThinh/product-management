@@ -4,13 +4,11 @@ include ../mixins/sub-menu.pug
 header.header.py-2.border-bottom.bg-white
   .container
     .row.align-items-center
-      //- 1. Logo (Giảm nhẹ chiều cao)
       .col-auto
         .inner-logo
           a(href="/")
             img(src="/client/images/logo.svg", alt="logo", style="height: 30px;")
 
-      //- 2. Thanh tìm kiếm (Làm gọn lại)
       .col.mx-4
         form(action=`/search` method='GET')
           .input-group.input-group-sm
@@ -26,10 +24,8 @@ header.header.py-2.border-bottom.bg-white
               style="border-radius: 0 20px 20px 0;"
             ) Tìm
 
-      //- 3. Menu (Sát lại gần nhau hơn)
       .col-auto
         .inner-menu
-          //- Giảm gap-4 xuống gap-3 để menu trông gọn gàng
           ul.d-flex.align-items-center.list-unstyled.mb-0.gap-3
             li.sub-menu.position-relative
               a.text-decoration-none.custom-link.small(href="/products") Sản phẩm
@@ -39,5 +35,11 @@ header.header.py-2.border-bottom.bg-white
               a.text-decoration-none.custom-link.small(href="/cart") 
                 | Giỏ hàng (#{miniCart ? miniCart.totalQuantity : 0})
             
-            li
-              a.text-decoration-none.custom-link.small(href="/user/register") Đăng ký
+            if !user
+              li
+                a.text-decoration-none.custom-link.small(href="/user/register") Đăng ký
+              li
+                a.text-decoration-none.custom-link.small(href="/user/login") Đăng nhập
+            else 
+              li
+                a.text-decoration-none.custom-link.small(href="/user/logout") Đăng xuất
