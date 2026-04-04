@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head(pageTitle)
+
+    if (userInfo)
+      .row
+        .col-12
+          if (userInfo.avatar)
+            div(class="mb-3")
+              img(
+                src=userInfo.avatar
+                width="150px"
+                class="img-thumbnail"
+              )
+          
+          if (userInfo.fullName)
+            div(class="mb-3") Họ tên: <b>#{userInfo.fullName}</b>
+
+          if (userInfo.email)
+            div(class="mb-3") Email: <b>#{userInfo.email}</b>
+
+          if (userInfo.phone)
+            div(class="mb-3") Số điện thoại: <b>#{userInfo.phone}</b>
+
+          if (userInfo.status)
+            div(class="mb-3")
+              span Trạng thái: 
+              span
+                if (userInfo.status === "active")
+                  span(class="badge bg-success") Hoạt động
+                else
+                  span(class="badge bg-danger") Dừng hoạt động
+
+          a(
+            href=`/user/profile/edit`
+            class="btn btn-primary"
+          ) Chỉnh sửa thông tin
