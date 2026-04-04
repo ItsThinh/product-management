@@ -1,5 +1,6 @@
 const User = require('../../models/user.model');
 const ForgotPassword = require('../../models/forgot-password.model');
+const Cart = require('../../models/cart.model');
 
 const md5 = require('md5');
 const generateHelper = require('../../helpers/generate');
@@ -32,6 +33,8 @@ module.exports.registerPost = async (req, res) => {
 
     res.cookie('tokenUser', newUser.token);
 
+    await Cart.updateOne({ _id: req.cookies.cartId }, { $set: { user_id: newUser._id } });
+
     req.flash('success', 'Đăng ký thành công');
     res.redirect('/');
 };
@@ -56,12 +59,44 @@ module.exports.loginPost = async (req, res) => {
 
     res.cookie('tokenUser', user.token);
 
+    const cartExisted = await Cart.findOne({ user_id: user._id });
+
+    // Gộp giỏ khách và giỏ hàng user khi đăng nhập
+    if (!cartExisted) {
+        await Cart.updateOne({ _id: req.cookies.cartId }, { $set: { user_id: user._id } });
+    } else {
+
+        const guestCart = await Cart.findOne({ _id: req.cookies.cartId });
+        const productMap = new Map(
+            cartExisted.products.map(p => [p.product_id.toString(), p.quantity])
+        );
+
+        for (const product of guestCart.products) {
+            if (productMap.has(product.product_id.toString())) {
+                const currentQuantity = productMap.get(product.product_id.toString());
+                productMap.set(product.product_id.toString(), currentQuantity + product.quantity);
+            } else {
+                productMap.set(product.product_id.toString(), product.quantity);
+            }
+        }
+
+        cartExisted.products = Array.from(productMap, ([product_id, quantity]) => ({
+            product_id,
+            quantity
+        }));
+        await cartExisted.save();
+        await Cart.deleteOne({ _id: guestCart._id });
+
+        res.cookie('cartId', cartExisted.id);
+    }
+
     res.redirect('/');
 }
 
 // [GET] /user/logout
 module.exports.logout = (req, res) => {
     res.clearCookie('tokenUser');
+    res.clearCookie('cartId');
     res.redirect('/');
 }
 
