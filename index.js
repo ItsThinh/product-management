@@ -44,6 +44,12 @@ app.set('view engine', 'pug');
 route(app);
 adminRoute(app);
 
+app.use((req, res) => {
+    res.status(404).render('client/pages/errors/404', {
+        pageTitle: '404 Not Found',
+    });
+});
+
 // App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // Biến prefixAdmin bây giờ sẽ có thể được gọi ở bất cứ file pug nào
