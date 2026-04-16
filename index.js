@@ -11,6 +11,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const moment = require('moment');
+const http = require('http');
+const { Server } = require('socket.io');
 
 const systemConfig = require('./config/system');
 
@@ -43,18 +45,29 @@ app.set('view engine', 'pug');
 // Route
 route(app);
 adminRoute(app);
+// End Route
 
+// 404 page
 app.use((req, res) => {
     res.status(404).render('client/pages/errors/404', {
         pageTitle: '404 Not Found',
     });
 });
+// End 404 page
+
+// Socket.io
+const server = http.createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log('a user connected', socket.id);
+});
+// End Socket.io
 
 // App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // Biến prefixAdmin bây giờ sẽ có thể được gọi ở bất cứ file pug nào
 app.locals.moment = moment;
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`App is listening on port ${port}`);
 });
