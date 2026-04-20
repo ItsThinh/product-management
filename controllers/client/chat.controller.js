@@ -55,8 +55,6 @@ module.exports.index = async (req, res) => {
         }
     ]);
 
-    console.log(chatsWithUserInfo);
-
     res.render('client/pages/chat/index', {
         pageTitle: 'Chat',
         chats: chatsWithUserInfo
