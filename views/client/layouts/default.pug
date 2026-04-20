@@ -22,4 +22,8 @@ html
     script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js")
     script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js")
     script(src='/socket.io/socket.io.js')
+
+    //- Cần load script này trước vì nó khởi tạo biến socket trong scope
     script(src='/client/js/socket.js')
+    //- Load script này sau vì nó có dùng socket đã được khởi tạo
+    script(src='/client/js/chat.js')

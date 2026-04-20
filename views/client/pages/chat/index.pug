@@ -15,13 +15,16 @@ block main
     h2(style="text-align: center;") Phòng Chat Trực Tuyến
 
     #chat-container
-      .message.received
-        strong Admin: 
-        span Chào mừng bạn đến với khung chat!
-      .message.sent
-        strong Bạn: 
-        span Xin chào, tôi có thể giúp gì không?
+      for chat in chats
+        if (chat.user_id != user._id)
+          .message.received
+            strong #{chat.user.fullName}: 
+            span #{chat.content}
+        else
+          .message.sent
+            strong Bạn: 
+            span #{chat.content}
 
     form#input-area(action="#")
-      input(type="text", placeholder="Nhập tin nhắn...", required)
+      input(type="text", name='content', placeholder="Nhập tin nhắn...", required)
       button(type="submit") Gửi

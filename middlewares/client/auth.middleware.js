@@ -1,11 +1,10 @@
-const User = require('../../models/account.model');
+const User = require('../../models/user.model');
 
 module.exports.requireAuth = async (req, res, next) => {
 
     if (!req.cookies.tokenUser) {
         return res.redirect(`/user/login`);
     } else {
-
         const user = await User
             .findOne({
                 token: req.cookies.tokenUser,
@@ -14,6 +13,7 @@ module.exports.requireAuth = async (req, res, next) => {
             .select('-password');
 
         if (!user) {
+            console.log('user not found');
             res.redirect(`/user/login`);
             return;
         }
