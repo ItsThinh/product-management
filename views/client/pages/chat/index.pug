@@ -71,6 +71,11 @@ block main
         cursor: pointer;
       }
 
+      .tooltip.shown {
+          visibility: visible;
+          opacity: 1;
+      }
+
     h2(style="text-align: center;") Phòng Chat Trực Tuyến
     
     .chat-wrapper(my-id=user.id)
@@ -86,4 +91,7 @@ block main
 
       form#input-area(action="")
         input(type="text", name='content', placeholder="Nhập tin nhắn...", autocomplete="off")
+        span.button-icon.btn.btn-light.mx-2: i.fa-solid.fa-face-smile
         button(type="submit") Gửi
+  div(class='tooltip', role='tooltip')
+    emoji-picker

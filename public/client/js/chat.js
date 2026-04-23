@@ -1,3 +1,6 @@
+import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+import textFieldEdit from 'https://cdn.jsdelivr.net/npm/text-field-edit@^4/index.js'
+
 // Scroll Chat To Bottom
 const ScrollToBottom = () => {
     const chatBody = document.querySelector('#chat-container');
@@ -44,5 +47,17 @@ socket.on('SERVER_RETURN_MESSAGE', (data) => {
 });
 // End SERVER_RETURN_MESSAGE
 
+// emoji-picker-element
+const buttonIcon = document.querySelector('.button-icon');
+const tooltip = document.querySelector('.tooltip');
+Popper.createPopper(buttonIcon, tooltip);
+buttonIcon.addEventListener('click', () => {
+    tooltip.classList.toggle('shown');
+});
+// End emoji-picker-element
 
-
+// Insert Emoji Into Text Input
+document.querySelector('emoji-picker').addEventListener('emoji-click', e => {
+    textFieldEdit.insert(document.querySelector('input[name="content"]'), e.detail.unicode)
+});
+// End Insert Emoji Into Text Input
