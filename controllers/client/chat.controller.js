@@ -23,6 +23,16 @@ module.exports.index = async (req, res) => {
             });
         });
 
+        // Typing Visualization SERVER_RETURN_TYPING
+        socket.on('CLIENT_SEND_TYPING', async (type) => {
+            socket.broadcast.emit('SERVER_RETURN_TYPING', {
+                userId: userId,
+                fullName: fullName,
+                type: type
+            });
+        });
+        // End Typing Visualization SERVER_RETURN_TYPING
+
     });
     // End Socket.io
     
