@@ -119,23 +119,65 @@ block main
         100% { opacity: 0.2; }
       }
 
+      /* Image Styles */
+      .inner-images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 5px;
+      }
+      .sent .inner-images { justify-content: flex-end; }
+      .received .inner-images { justify-content: flex-start; }
+      .inner-images img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; }
+
+      /* Upload Preview */
+      .chat-wrapper .inner-preview-images .label-container {
+        display: none;
+      }
+
+      .chat-wrapper .inner-preview-images .input-container {
+        display: none;
+      }
+
+      .chat-wrapper .inner-preview-images .image-preview {
+        height: auto;
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .chat-wrapper .inner-preview-images .image-preview-item {
+        width: 90px;
+        background-size: contain;
+      }
+
     h2(style="text-align: center;") Phòng Chat Trực Tuyến
     
     .chat-wrapper(my-id=user.id)
       #chat-container
         each chat in chats
-          if (chat.user_id != user.id)
-            .message.received
+          div(class=(chat.user_id == user.id ? 'message sent' : 'message received'))
+            if (chat.user_id != user.id)
               strong(style="display:block; font-size: 12px; margin-bottom: 3px;") #{chat.user.fullName}
+            if (chat.content)
               span #{chat.content}
-          else
-            .message.sent
-              span #{chat.content}
+            if (chat.images)
+              .inner-images 
+                each image in chat.images
+                  img(src=image)
         div.inner-list-typing
+
+      .inner-preview-images 
+        div(class="custom-file-container", data-upload-id="upload-images")
 
       form#input-area(action="")
         input(type="text", name='content', placeholder="Nhập tin nhắn...", autocomplete="off")
         span.button-icon.btn.btn-light.mx-2: i.fa-solid.fa-face-smile
+        label(
+          class='button-icon btn btn-light mx-2'
+          for='file-upload-with-preview-upload-images'
+        )
+          i.fa-solid.fa-image
+        
         button(type="submit") Gửi
   div(class='tooltip', role='tooltip')
     emoji-picker

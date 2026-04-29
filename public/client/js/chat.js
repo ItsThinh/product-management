@@ -1,6 +1,13 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
 import textFieldEdit from 'https://cdn.jsdelivr.net/npm/text-field-edit@^4/index.js'
 
+// file-upload-with-preview
+const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-images', {
+    multiple: true,
+    maxFileCount: 6
+});
+// End file-upload-with-preview
+
 // Scroll Chat To Bottom
 const ScrollToBottom = () => {
     const chatBody = document.querySelector('#chat-container');
@@ -16,9 +23,14 @@ if (formSendDdata) {
     formSendDdata.addEventListener('submit', (e) => {
         e.preventDefault();
         const content = e.target.elements.content.value;
-        if (content) {
-            socket.emit('CLIENT_SEND_MESSAGE', content);
+        const images = upload.cachedFileArray;
+        if (content || images.length > 0) {
+            socket.emit('CLIENT_SEND_MESSAGE', {
+                content: content,
+                images: images
+            });
             e.target.elements.content.value = '';
+            upload.resetPreviewPanel();
             // Stop Typing Visual
             socket.emit('CLIENT_SEND_TYPING', 'hide');
         }
@@ -32,16 +44,37 @@ socket.on('SERVER_RETURN_MESSAGE', (data) => {
     const userId = document.querySelector('[my-id]').getAttribute('my-id');
     const div = document.createElement('div');
     const elementTyping = document.querySelector('.inner-list-typing');
+
     let htmlFullName = '';
+    let htmlContent = '';
+    let htmlImages = '';
+
     if (userId == data.userId) {
         div.classList.add('message', 'sent');
     } else {
         htmlFullName = `<strong style="display:block; font-size: 12px; margin-bottom: 3px;">${data.fullName}</strong>`;
         div.classList.add('message', 'received');
     }
+
+    if (data.content) {
+        htmlContent = `
+            <span>${data.content}</span>
+        `;
+    }
+
+    if (data.images.length > 0) {
+        htmlImages = `<div class="inner-images">`;
+        for(const image of data.images) {
+            htmlImages += `<img src='${image}'>`;
+        }
+        htmlImages += '</div>'
+
+    }
+
     div.innerHTML = `
         ${htmlFullName}
-        <span>${data.content}</span>
+        ${htmlContent}
+        ${htmlImages}
     `;
 
     const chatBody = document.querySelector('#chat-container');
