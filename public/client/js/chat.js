@@ -79,7 +79,10 @@ socket.on('SERVER_RETURN_MESSAGE', (data) => {
 
     const chatBody = document.querySelector('#chat-container');
     chatBody.insertBefore(div, elementTyping);
+
     ScrollToBottom();
+    
+    const gallery = new Viewer(div);
 });
 // End SERVER_RETURN_MESSAGE
 
@@ -158,3 +161,10 @@ socket.on('SERVER_RETURN_TYPING', (data) => {
 });
 // End SERVER_TYPING
 // End Typing Visualization
+
+// Preview Full Image
+const chatBodyImagePreview = document.querySelector('#chat-container');
+if (chatBodyImagePreview) {
+    const gallery = new Viewer(chatBodyImagePreview);
+}
+// End Preview Full Image
