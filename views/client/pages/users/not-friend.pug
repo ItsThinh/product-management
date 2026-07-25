@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+
+    include ../../partials/list-btn-users.pug
+
+    .row
+      .col-12
+        +box-head("Danh sách người dùng")
+
+    .row
+      each user in users
+        .col-6
+          div(class="box-user")
+            div(class="inner-avatar")
+              img(
+                src=(user.avatar ? user.avatar : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg')
+                alt=user.fullName
+              )
+            div(class="inner-info")
+              div(class="inner-name") #{user.fullName}
+              div(class="inner-buttons")
+                button(
+                  class="btn btn-sm btn-primary mr-1"
+                  btn-add-friend=user.id
+                ) Kết bạn
+                button(
+                  class="btn btn-sm btn-secondary"
+                  btn-cancel-friend=user.id
+                ) Hủy
