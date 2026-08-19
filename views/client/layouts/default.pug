@@ -38,10 +38,8 @@ html
 
     script(src='/socket.io/socket.io.js')
 
-    //- Cần load script này trước vì nó khởi tạo biến socket trong scope
+    //- Cần load script này trước chat.js vì nó khởi tạo biến socket trong scope
     script(src='/client/js/socket.js')
-    //- Load script này sau vì nó có dùng socket đã được khởi tạo
-    script(type='module', src='/client/js/chat.js')
 
     //- emoji-picker-element
     script(type="module", src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")
@@ -50,4 +48,4 @@ html
     //- Fontawesome
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
 
-    
+    block script

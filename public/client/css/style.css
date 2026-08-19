@@ -70,7 +70,7 @@ a {
   text-align: center;
   padding: 20px;
   font-size: 14px;
-  color: #cbd5e1; 
+  color: #cbd5e1;
   margin-top: 40px;
 }
 
@@ -104,7 +104,8 @@ a {
 }
 
 .product-item .inner-image {
-  position: relative; /* Quan trọng */
+  position: relative;
+  /* Quan trọng */
   width: 100%;
   aspect-ratio: 1 / 1;
   background: #f8f8f8;
@@ -118,14 +119,15 @@ a {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: linear-gradient(45deg, #ff8a00, #ffc107); /* Hiệu ứng gradient */
+  background: linear-gradient(45deg, #ff8a00, #ffc107);
+  /* Hiệu ứng gradient */
   color: white;
   padding: 4px 10px;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 2;
   letter-spacing: 0.5px;
 }
@@ -185,11 +187,13 @@ a {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-end; /* Đẩy toàn bộ menu sang phải */
+  justify-content: flex-end;
+  /* Đẩy toàn bộ menu sang phải */
 }
 
 .inner-menu ul li {
-  position: relative; /* Làm gốc tọa độ cho menu con */
+  position: relative;
+  /* Làm gốc tọa độ cho menu con */
 }
 
 .inner-menu ul li a {
@@ -203,17 +207,19 @@ a {
 /* --- Menu Con (Cấp 2, 3...) --- */
 .inner-menu ul li ul {
   position: absolute;
-  top: 100%; /* Hiện ngay dưới menu cha */
-  right: 0;    /* Căn lề phải bằng với menu cha */
+  top: 100%;
+  /* Hiện ngay dưới menu cha */
+  right: 0;
+  /* Căn lề phải bằng với menu cha */
   flex-direction: column;
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   min-width: 200px;
-  
+
   /* Hiệu ứng ẩn ban đầu */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px); 
+  transform: translateY(10px);
   transition: all 0.3s ease;
   z-index: 999;
 }
@@ -221,28 +227,32 @@ a {
 /* Menu cấp 3 trở đi: Hiện sang bên trái của menu cha */
 .inner-menu ul li ul li ul {
   top: 0;
-  right: 100%; /* Đẩy sang bên trái */
-  margin-right: 2px; /* Khoảng cách nhỏ tránh dính sát */
+  right: 100%;
+  /* Đẩy sang bên trái */
+  margin-right: 2px;
+  /* Khoảng cách nhỏ tránh dính sát */
 }
 
 /* --- Hiệu ứng Hover --- */
-.inner-menu ul li:hover > ul {
+.inner-menu ul li:hover>ul {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
 /* Trang trí thêm cho các mục có menu con (tùy chọn) */
-.inner-menu ul li:has(ul) > a::after {
+.inner-menu ul li:has(ul)>a::after {
   content: ' ▾';
   font-size: 10px;
 }
-.inner-menu ul li ul li:has(ul) > a::after {
-  content: ' ◂'; /* Mũi tên chỉ sang trái cho menu cấp 3 */
+
+.inner-menu ul li ul li:has(ul)>a::after {
+  content: ' ◂';
+  /* Mũi tên chỉ sang trái cho menu cấp 3 */
 }
 
 /* Hover background cho các item */
-.inner-menu ul li ul li:hover > a {
+.inner-menu ul li ul li:hover>a {
   background-color: #f8f9fa;
   color: #007bff;
 }
@@ -256,7 +266,8 @@ a {
 }
 
 .inner-image:hover img {
-  transform: scale(1.02); /* Hiệu ứng zoom nhẹ khi di chuột vào ảnh */
+  transform: scale(1.02);
+  /* Hiệu ứng zoom nhẹ khi di chuột vào ảnh */
 }
 
 /* Gạch chân giá cũ nếu có giảm giá */
@@ -282,12 +293,14 @@ a {
 /* Container cố định góc màn hình */
 .message.info {
   position: fixed;
-  top: 80px; /* Đẩy xuống dưới Header (Header thường cao 60-70px) */
+  top: 80px;
+  /* Đẩy xuống dưới Header (Header thường cao 60-70px) */
   right: 20px;
-  z-index: 9999; /* Đảm bảo nổi trên tất cả các lớp khác */
-  
+  z-index: 9999;
+  /* Đảm bảo nổi trên tất cả các lớp khác */
+
   /* QUAN TRỌNG: Cho phép chuột click xuyên qua cái khung tàng hình này */
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 /* Style cơ bản cho Alert */
@@ -299,11 +312,11 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.4s ease;
-  
+
   /* QUAN TRỌNG: Khi Alert hiện ra thì nó PHẢI nhận được click (để bấm nút X) */
-  pointer-events: auto; 
+  pointer-events: auto;
 }
 
 /* Khi có class alert-hidden */
@@ -311,7 +324,7 @@ a {
   opacity: 0;
   transform: translateX(100%);
   /* Khi ẩn đi thì tuyệt đối không chặn click nữa */
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 /* Màu sắc Success & Error */
@@ -339,6 +352,7 @@ span[close-alert] {
 span[close-alert]:hover {
   opacity: 1;
 }
+
 /* End Alert */
 
 /* =========================
@@ -425,4 +439,17 @@ span[close-alert]:hover {
 .box-user .inner-buttons .btn-secondary:hover {
   background-color: #475569;
   border-color: #475569;
-}
+}
+
+/* Ẩn / Hiện nút Kết bạn - Hủy dựa trên class .add */
+.box-user [btn-cancel-friend] {
+  display: none;
+}
+
+.box-user.add [btn-add-friend] {
+  display: none;
+}
+
+.box-user.add [btn-cancel-friend] {
+  display: inline-block;
+}

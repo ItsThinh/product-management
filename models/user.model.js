@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
             default: 'active'
         },
         requestFriend: Array, // Lời mời đã gửi cho người khác
-        accecptFriend: Array, // Lời mời đã nhận từ người khác
+        acceptFriend: Array, // Lời mời đã nhận từ người khác
         friendList: [         // Danh sách bạn bè và phòng chat
             {
                 user_id: String, // ID của người bạn
