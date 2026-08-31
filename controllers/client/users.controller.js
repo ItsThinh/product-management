@@ -32,13 +32,32 @@ module.exports.notFriend = async (req, res) => {
 };
 
 module.exports.friends = (req, res) => {
-    res.render('client/pages/users/friends');
+    res.render('client/pages/users/friends', {
+        pageTitle: 'Danh sách bạn bè'
+    });
 };
 
-module.exports.request = (req, res) => {
-    res.render('client/pages/users/requests');
+module.exports.request = async (req, res) => {
+
+    userSocket(res);
+
+    const localUser = res.locals.user;
+    const requestList = localUser.requestFriend || [];
+
+    const requestedUser = await User.find({
+        _id: { $in: requestList },
+        status: 'active',
+        deleted: false
+    }).select('id avatar fullName');
+
+    res.render('client/pages/users/requests', {
+        users: requestedUser,
+        pageTitle: 'Lời mời đã gửi'
+    });
 };
 
 module.exports.accept = (req, res) => {
-    res.render('client/pages/users/accept-requests');
+    res.render('client/pages/users/accept-requests', {
+        pageTitle: 'Lời mời kết bạn'
+    });
 };

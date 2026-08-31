@@ -33,6 +33,35 @@ module.exports = (res) => {
                 });
             }
 
+        });
+
+        socket.on('CLIENT_CANCEL_FRIEND', async (userId) => {
+            const myUserId = res.locals.user.id;
+            // Xóa id của B trong requestFriend của A
+            const existBinA = await User.findOne({
+                _id: myUserId,
+                requestFriend: userId
+            });
+
+            if (existBinA) {
+                await User.updateOne(
+                    { _id: myUserId },
+                    { $pull: { requestFriend: userId } }
+                );
+            }
+
+            // Xóa id của A trong accept Friend của B
+            const existAinB = await User.findOne({
+                _id: userId,
+                acceptFriend: myUserId
+            });
+
+            if (existAinB) {
+                await User.updateOne(
+                    { _id: userId },
+                    { $pull: { acceptFriend: myUserId } }
+                )
+            }
         })
     });
 }
