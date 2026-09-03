@@ -30,3 +30,14 @@ listBtnRefuseFriend.forEach(button => {
     })
 });
 // End chức năng từ chối kết bạn
+
+// Chức năng chấp nhận kết bạn
+const listBtnAcceptFriend = document.querySelectorAll('[btn-accept-friend]');
+listBtnAcceptFriend.forEach(button => {
+    button.addEventListener('click', () => {
+        button.closest('.box-user').classList.add('accepted');
+        const userId = button.getAttribute('btn-accept-friend');
+        socket.emit('CLIENT_ACCEPT_FRIEND', userId);
+    })
+});
+// End chức năng chấp nhận kết bạn

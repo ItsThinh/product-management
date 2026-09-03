@@ -454,18 +454,25 @@ span[close-alert]:hover {
   display: inline-block;
 }
 
-.box-user [btn-deleted-friend] {
+.box-user [btn-deleted-friend],
+.box-user [btn-accepted-friend] {
   display: none;
 }
 
-.box-user.refuse [btn-accept-friend] {
-  display: none;
-}
-
+.box-user.refuse [btn-accept-friend],
 .box-user.refuse [btn-refuse-friend] {
   display: none;
 }
 
+.box-user.accepted [btn-accept-friend],
+.box-user.accepted [btn-refuse-friend] {
+  display: none;
+}
+
 .box-user.refuse [btn-deleted-friend] {
+  display: inline-block;
+}
+
+.box-user.accepted [btn-accepted-friend] {
   display: inline-block;
 }
