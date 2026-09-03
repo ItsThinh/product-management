@@ -56,8 +56,21 @@ module.exports.request = async (req, res) => {
     });
 };
 
-module.exports.accept = (req, res) => {
+module.exports.accept = async (req, res) => {
+
+    userSocket(res);
+
+    const localUser = res.locals.user;
+    const acceptList = localUser.acceptFriend || [];
+
+    const acceptFriend = await User.find({
+        _id: { $in: acceptList },
+        status: 'active',
+        deleted: false
+    }).select('id avatar fullName');
+
     res.render('client/pages/users/accept-requests', {
+        users: acceptFriend,
         pageTitle: 'Lời mời kết bạn'
     });
 };
