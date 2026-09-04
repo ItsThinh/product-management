@@ -54,3 +54,69 @@ if (badgeUserAccept) {
 }
 
 // End SERVER_RETURN_LENGTH_ACCEPT_FRIEND
+
+// SERVER_RETURN_USER_INFO_ADD_FRIEND
+const dataUsersAccept = document.querySelector('[data-users-accept]');
+if (dataUsersAccept) {
+    const userId = dataUsersAccept.getAttribute('data-users-accept');
+    socket.on('SERVER_RETURN_INFO_ADD_FRIEND', (data) => {
+        if (userId == data.userId) {
+            const newBoxUser = document.createElement('div');
+            newBoxUser.classList.add('col-6');
+
+            const defaultAvatar = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
+
+            newBoxUser.innerHTML = `
+                <div class="box-user">
+                    <div class="inner-avatar">
+                        <img 
+                            src="${data.infoUser.avatar ? data.infoUser.avatar : defaultAvatar}" 
+                            alt="${data.infoUser.fullName}"
+                        >
+                    </div>
+                    <div class="inner-info">
+                        <div class="inner-name">${data.infoUser.fullName}</div>
+                        <div class="inner-buttons">
+                            <button 
+                                class="btn btn-sm btn-primary mr-1" 
+                                btn-accept-friend="${data.infoUser._id}"
+                            >Chấp nhận</button>
+                            <button 
+                                class="btn btn-sm btn-secondary" 
+                                btn-refuse-friend="${data.infoUser._id}"
+                            >Xóa</button>
+                            <button 
+                                class="btn btn-sm btn-secondary mr-1" 
+                                btn-deleted-friend 
+                                disabled
+                            >Đã xóa</button>
+                            <button 
+                                class="btn btn-sm btn-secondary mr-1" 
+                                btn-accepted-friend 
+                                disabled
+                            >Đã chấp nhận</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            dataUsersAccept.appendChild(newBoxUser);
+
+            const acceptButton = newBoxUser.querySelector('[btn-accept-friend]');
+            acceptButton.addEventListener('click', () => {
+                acceptButton.closest('.box-user').classList.add('accepted');
+                const userId = acceptButton.getAttribute('btn-accept-friend');
+                socket.emit('CLIENT_ACCEPT_FRIEND', userId);
+            });
+
+            const refuseButton = newBoxUser.querySelector('[btn-refuse-friend]');
+            refuseButton.addEventListener('click', () => {
+                refuseButton.closest('.box-user').classList.add('refuse');
+                const userId = refuseButton.getAttribute('btn-refuse-friend');
+                socket.emit('CLIENT_REFUSE_FRIEND', userId);
+            })
+        }
+    });
+}
+
+// End SERVER_RETURN_USER_INFO_ADD_FRIEND
