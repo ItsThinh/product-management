@@ -2,6 +2,16 @@ const User = require('../../models/user.model');
 
 module.exports = (res) => {
     _io.once('connection', (socket) => {
+
+        const emitLengthAcceptFriend = async (targetUserId) => {
+            const infoUser = await User.findOne({ _id: targetUserId });
+            const lengthAcceptFriends = infoUser?.acceptFriend?.length || 0;
+            socket.broadcast.emit('SERVER_RETURN_LENGTH_ACCEPT_FRIEND', {
+                userId: targetUserId,
+                lengthAcceptFriends: lengthAcceptFriends
+            });
+        };
+
         // Chức năng gửi lời mời kết bạn
         socket.on('CLIENT_ADD_FRIEND', async (userId) => {
             const myUserId = res.locals.user.id;
@@ -35,16 +45,7 @@ module.exports = (res) => {
             }
 
             // Lấy ra độ dài acceptFriend của B và trả về
-            const infoUserB = await User.findOne(
-                { _id: userId }
-            );
-
-            const lengthAcceptFriends = infoUserB.acceptFriend.length;
-
-            socket.broadcast.emit('SERVER_RETURN_LENGTH_ACCEPT_FRIEND', {
-                userId: userId,
-                lengthAcceptFriends: lengthAcceptFriends
-            });
+            await emitLengthAcceptFriend(userId);
 
         });
 
@@ -77,7 +78,7 @@ module.exports = (res) => {
                 )
             }
 
-
+            await emitLengthAcceptFriend(userId);
 
         });
 
