@@ -1,7 +1,5 @@
 const User = require('../../models/user.model');
-
 const userSocket = require('../../sockets/client/user.socket');
-
 
 // [GET] /users/not-friend
 module.exports.notFriend = async (req, res) => {
@@ -33,12 +31,24 @@ module.exports.notFriend = async (req, res) => {
     });
 };
 
-module.exports.friends = (req, res) => {
+// [GET] /users/friends
+module.exports.friends = async (req, res) => {
+    const userId = res.locals.user.id;
+    const myUser = await User.findOne({ _id: userId });
+    const friendsId = (myUser.friendList || []).map(item => item.user_id);
+    const users = await User.find({
+        _id: { $in: friendsId },
+        status: 'active',
+        deleted: false
+    }).select('id avatar fullName statusOnline');
+
     res.render('client/pages/users/friends', {
-        pageTitle: 'Danh sách bạn bè'
+        pageTitle: 'Danh sách bạn bè',
+        users
     });
 };
 
+// [GET] /users/request
 module.exports.request = async (req, res) => {
 
     userSocket(res);
@@ -58,6 +68,7 @@ module.exports.request = async (req, res) => {
     });
 };
 
+// [GET] /users/accept
 module.exports.accept = async (req, res) => {
 
     userSocket(res);

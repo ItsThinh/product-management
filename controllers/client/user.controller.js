@@ -13,10 +13,10 @@ module.exports.register = async (req, res) => {
     });
 };
 
-// [GET] user/register
+// [POST] user/register
 module.exports.registerPost = async (req, res) => {
 
-    const emailExist = await User.findOne( { email: req.body.email });
+    const emailExist = await User.findOne({ email: req.body.email });
 
     if (emailExist) {
         req.flash('error', 'Email đã được đăng ký');
@@ -44,7 +44,7 @@ module.exports.login = (req, res) => {
     res.render('client/pages/user/login');
 };
 
-// [GET] /user/login
+// [POST] /user/login
 module.exports.loginPost = async (req, res) => {
     const user = await User.findOne({ email: req.body.email, password: md5(req.body.password) });
     if (!user) {
@@ -58,6 +58,11 @@ module.exports.loginPost = async (req, res) => {
     }
 
     res.cookie('tokenUser', user.token);
+
+    await User.updateOne(
+        { token: user.token },
+        { statusOnline: 'online' }
+    );
 
     const cartExisted = await Cart.findOne({ user_id: user._id });
 
@@ -94,7 +99,11 @@ module.exports.loginPost = async (req, res) => {
 }
 
 // [GET] /user/logout
-module.exports.logout = (req, res) => {
+module.exports.logout = async (req, res) => {
+    await User.updateOne(
+        { token: req.cookies.tokenUser },
+        { statusOnline: 'offline' }
+    );
     res.clearCookie('tokenUser');
     res.clearCookie('cartId');
     res.redirect('/');
@@ -124,7 +133,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
         return res.redirect(`/user/password/otp?email=${email}`);
     }
     // End OTP Existed
-    
+
     const otp = generateHelper.generateRandomNumber(6);
 
     const objectForgotPassword = {
@@ -142,7 +151,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
         Hạn dùng: 3 phút.
         <br>
     `;
-    
+
     sendMailHelper.sendMail(email, subject, html);
 
     req.flash('success', 'Mã OTP đã được gửi, vui lòng kiểm tra email');

@@ -10,5 +10,27 @@ block main
       .col-12
         +box-head("Danh sách bạn bè")
 
+    .row(data-users-friend=user.id)
+      each user in users
+        .col-6(user-id=user.id)
+          div(class="box-user")
+            div(class="inner-avatar")
+              img(
+                src=(user.avatar ? user.avatar : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg')
+                alt=user.fullName
+              )
+              span(
+                class="inner-status"
+                status=user.statusOnline
+              )
+            div(class="inner-info")
+              div(class="inner-name") #{user.fullName}
+              div(class="inner-buttons")
+                button(
+                  class="btn btn-sm btn-primary mr-1"
+                )
+                  i(class="fa-regular fa-comment-dots mr-2")
+                  |  Nhắn tin
+
 block script 
   script(src="/client/js/users.js")
