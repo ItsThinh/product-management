@@ -20,27 +20,27 @@ listBtnCancelFriend.forEach(button => {
 });
 // End Chức năng hủy yêu cầu kết bạn
 
-// Chức năng từ chối kết bạn
-const listBtnRefuseFriend = document.querySelectorAll('[btn-refuse-friend]');
-listBtnRefuseFriend.forEach(button => {
-    button.addEventListener('click', () => {
-        button.closest('.box-user').classList.add('refuse');
-        const userId = button.getAttribute('btn-refuse-friend');
-        socket.emit('CLIENT_REFUSE_FRIEND', userId);
-    })
-});
-// End chức năng từ chối kết bạn
+// // Chức năng từ chối kết bạn
+// const listBtnRefuseFriend = document.querySelectorAll('[btn-refuse-friend]');
+// listBtnRefuseFriend.forEach(button => {
+//     button.addEventListener('click', () => {
+//         button.closest('.box-user').classList.add('refuse');
+//         const userId = button.getAttribute('btn-refuse-friend');
+//         socket.emit('CLIENT_REFUSE_FRIEND', userId);
+//     })
+// });
+// // End chức năng từ chối kết bạn
 
-// Chức năng chấp nhận kết bạn
-const listBtnAcceptFriend = document.querySelectorAll('[btn-accept-friend]');
-listBtnAcceptFriend.forEach(button => {
-    button.addEventListener('click', () => {
-        button.closest('.box-user').classList.add('accepted');
-        const userId = button.getAttribute('btn-accept-friend');
-        socket.emit('CLIENT_ACCEPT_FRIEND', userId);
-    })
-});
-// End chức năng chấp nhận kết bạn
+// // Chức năng chấp nhận kết bạn
+// const listBtnAcceptFriend = document.querySelectorAll('[btn-accept-friend]');
+// listBtnAcceptFriend.forEach(button => {
+//     button.addEventListener('click', () => {
+//         button.closest('.box-user').classList.add('accepted');
+//         const userId = button.getAttribute('btn-accept-friend');
+//         socket.emit('CLIENT_ACCEPT_FRIEND', userId);
+//     })
+// });
+// // End chức năng chấp nhận kết bạn
 
 // SERVER_RETURN_LENGTH_ACCEPT_FRIEND
 const badgeUserAccept = document.querySelector('[badge-users-accept]');
@@ -52,12 +52,12 @@ if (badgeUserAccept) {
         }
     });
 }
-
 // End SERVER_RETURN_LENGTH_ACCEPT_FRIEND
 
-// SERVER_RETURN_USER_INFO_ADD_FRIEND
+// DELEGATION BUTTON EVENT
 const dataUsersAccept = document.querySelector('[data-users-accept]');
 if (dataUsersAccept) {
+    // SERVER_RETURN_USER_INFO_ADD_FRIEND
     const userId = dataUsersAccept.getAttribute('data-users-accept');
     socket.on('SERVER_RETURN_INFO_ADD_FRIEND', (data) => {
         if (userId == data.userId) {
@@ -101,22 +101,29 @@ if (dataUsersAccept) {
             `;
 
             dataUsersAccept.appendChild(newBoxUser);
-
-            const acceptButton = newBoxUser.querySelector('[btn-accept-friend]');
-            acceptButton.addEventListener('click', () => {
-                acceptButton.closest('.box-user').classList.add('accepted');
-                const userId = acceptButton.getAttribute('btn-accept-friend');
-                socket.emit('CLIENT_ACCEPT_FRIEND', userId);
-            });
-
-            const refuseButton = newBoxUser.querySelector('[btn-refuse-friend]');
-            refuseButton.addEventListener('click', () => {
-                refuseButton.closest('.box-user').classList.add('refuse');
-                const userId = refuseButton.getAttribute('btn-refuse-friend');
-                socket.emit('CLIENT_REFUSE_FRIEND', userId);
-            })
         }
     });
-}
+    // End SERVER_RETURN_USER_INFO_ADD_FRIEND
 
-// End SERVER_RETURN_USER_INFO_ADD_FRIEND
+    dataUsersAccept.addEventListener('click', (e) => {
+        // CLIENT_ACCEPT_FRIEND
+        const btnAccept = e.target.closest('[btn-accept-friend]');
+        if (btnAccept) {
+            btnAccept.closest('.box-user').classList.add('accepted');
+            const userId = btnAccept.getAttribute('btn-accept-friend');
+            socket.emit('CLIENT_ACCEPT_FRIEND', userId);
+        }
+        // End CLIENT_ACCEPT_FRIEND
+
+        // CLIENT_REFUSE_FRIEND
+        const btnRefuse = e.target.closest('[btn-refuse-friend]');
+        if (btnRefuse) {
+            btnRefuse.closest('.box-user').classList.add('refuse');
+            const userId = btnRefuse.getAttribute('btn-refuse-friend');
+            socket.emit('CLIENT_REFUSE_FRIEND', userId);
+        }
+        // End CLIENT_REFUSE_FRIEND
+    });
+}
+// End DELEGATION BUTTON EVENT
+
