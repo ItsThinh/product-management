@@ -51,6 +51,7 @@ module.exports = (res) => {
                 _id: myUserId
             }).select('id avatar fullName');
 
+            // Gửi thông tin A đến bên B để hiển thị thông tin A real time bằng socket
             socket.broadcast.emit('SERVER_RETURN_INFO_ADD_FRIEND', {
                 userId: userId,
                 infoUser: infoUserA
@@ -87,7 +88,14 @@ module.exports = (res) => {
                 )
             }
 
+            // Lấy ra độ dài acceptFriend của B và trả về
             await emitLengthAcceptFriend(userId);
+
+            // Gửi id của A đến bên B để xóa đi box hiển thị A bằng socket
+            socket.broadcast.emit('SERVER_RETURN_USER_ID_CANCEL_FRIEND', {
+                userId: userId,
+                idUserCancel: myUserId
+            })
 
         });
 

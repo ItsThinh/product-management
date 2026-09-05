@@ -18,9 +18,11 @@ module.exports.notFriend = async (req, res) => {
 
     const acceptFriend = myUser.acceptFriend || [];
 
+    const friendList = (myUser.friendList || []).map(item => item.user_id);
+
     const users = await User.find({
         // Toán tử ... đưa các phần tử trong mảng ra ngoài
-        _id: { $nin: [myUser.id, ...requestFriend, ...acceptFriend] },
+        _id: { $nin: [myUser.id, ...requestFriend, ...acceptFriend, ...friendList] },
         status: 'active',
         deleted: false
     }).select('id avatar fullName');

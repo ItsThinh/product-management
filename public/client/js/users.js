@@ -63,6 +63,7 @@ if (dataUsersAccept) {
         if (userId == data.userId) {
             const newBoxUser = document.createElement('div');
             newBoxUser.classList.add('col-6');
+            newBoxUser.setAttribute('user-id', data.infoUser._id);
 
             const defaultAvatar = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
 
@@ -104,6 +105,17 @@ if (dataUsersAccept) {
         }
     });
     // End SERVER_RETURN_USER_INFO_ADD_FRIEND
+
+    // SERVER_RETURN_INFO_CANCEL_FRIEND
+    socket.on('SERVER_RETURN_USER_ID_CANCEL_FRIEND', (data) => {
+        if (userId == data.userId) {
+            const boxCancelFriend = dataUsersAccept.querySelector(`[user-id='${data.idUserCancel}']`);
+            if (boxCancelFriend)
+                boxCancelFriend.remove();
+
+        }
+    })
+    // End SERVER_RETURN_INFO_CANCEL_FRIEND
 
     dataUsersAccept.addEventListener('click', (e) => {
         // CLIENT_ACCEPT_FRIEND
